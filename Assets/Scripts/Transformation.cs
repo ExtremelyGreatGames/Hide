@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
+#if UNITY_ANDROID
+#else
 using UnityEngine.Windows.Speech;
+#endif
 
 public class Transformation : MonoBehaviour
 {
     // need sprite assets
 
+#if UNITY_ANDROID
+#else    
     Animator animator;
 
     private KeywordRecognizer keywordRecognizer;
@@ -40,4 +46,5 @@ public class Transformation : MonoBehaviour
         //Debug.Log("YOOO");
         animator.SetTrigger("Change" + keywordDict[args.text]);
     }
+#endif
 }
