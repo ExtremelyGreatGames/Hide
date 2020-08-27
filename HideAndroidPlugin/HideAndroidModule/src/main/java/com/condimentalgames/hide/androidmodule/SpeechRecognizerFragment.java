@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -14,11 +15,15 @@ import android.widget.Toast;
 
 import com.unity3d.player.UnityPlayer;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 /**
@@ -94,7 +99,6 @@ public class SpeechRecognizerFragment extends Fragment implements RecognitionLis
 
     @Override
     public void onResults(Bundle results) {
-        Log.i(TAG, "onResults");
         matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         scores = results.getFloatArray(SpeechRecognizer.CONFIDENCE_SCORES);
         if (matches != null) {
@@ -114,7 +118,7 @@ public class SpeechRecognizerFragment extends Fragment implements RecognitionLis
             if (!bestMatch.isEmpty()) {
                 PhraseRecognizedEventArgs args = new PhraseRecognizedEventArgs();
                 args.text = bestMatch;
-                args.confidenceLevel = (int) Math.floor(bestScore * 3);
+                args.confidenceLevel = bestScore;
                 onSpeechRecognized(args);
             }
         }
@@ -176,6 +180,14 @@ public class SpeechRecognizerFragment extends Fragment implements RecognitionLis
         this.listeners.add(listener);
     }
 
+    public void addUnityListener(final String objectName, final String functionName) {
+        UnityListener unityListener = new UnityListener();
+        unityListener.objectName = objectName;
+        unityListener.functionName = functionName;
+        PhraseRecognizedEventArgs args = new PhraseRecognizedEventArgs();
+        this.listeners.add(unityListener);
+    }
+
     public boolean isSpeechRecognitionAvailable() {
         return SpeechRecognizer.isRecognitionAvailable(activity);
     }
@@ -187,14 +199,25 @@ public class SpeechRecognizerFragment extends Fragment implements RecognitionLis
             return false;
         }
 
-        boolean granted = ContextCompat.checkSelfPermission(activity, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
+        // WARNING: trust Unity to do its job
+        boolean granted = true; // activity.checkSelfPermission(activity, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
         if (granted) {
-            speechRecognizer = SpeechRecognizer.createSpeechRecognizer(activity);
-            speechRecognizer.setRecognitionListener(this);
+            // reference: https://stackoverflow.com/a/11125271
+            Handler mainHandler = new Handler(activity.getMainLooper());
 
-            recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-            recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-            recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
+            Runnable mainRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    speechRecognizer = SpeechRecognizer.createSpeechRecognizer(activity);
+                    speechRecognizer.setRecognitionListener(SpeechRecognizerFragment.this);
+
+                    recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
+                }
+            };
+
+            mainHandler.post(mainRunnable);
         } else {
             Log.e(TAG, "Permission to record audio not yet granted. Ensure that permission was granted in Unity");
             Toast.makeText(activity, "Record audio not permitted", Toast.LENGTH_LONG).show();
@@ -204,7 +227,15 @@ public class SpeechRecognizerFragment extends Fragment implements RecognitionLis
 
     public void startListening() {
         recognitionStartTime = System.currentTimeMillis();
-        speechRecognizer.startListening(recognizerIntent);
+
+        Handler mainHandler = new Handler(activity.getMainLooper());
+        Runnable mainRunnable = new Runnable(){
+            @Override
+            public void run() {
+                speechRecognizer.startListening(recognizerIntent);
+            }
+        };
+        mainHandler.post(mainRunnable);
     }
 
     /**
@@ -224,20 +255,43 @@ public class SpeechRecognizerFragment extends Fragment implements RecognitionLis
         }
     }
 
+    public interface Listener {
+        public void OnSpeechRecognized(PhraseRecognizedEventArgs args);
+    }
+
     public class SemanticMeaning {
         public String key = "";
         public String[] values = new String[0];
     }
 
-    public interface Listener {
-        public void OnSpeechRecognized(PhraseRecognizedEventArgs args);
-    }
-
+    // todo: support other arguments
     public class PhraseRecognizedEventArgs {
-        public int confidenceLevel = 0;
+        public float confidenceLevel = 0;
         public SemanticMeaning[] semanticMeanings = new SemanticMeaning[0];
         public String text = "";
         public long phraseStartTime = 0;
         public long phraseDuration = 0;
+
+        public String toJSON() {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("confidenceLevel", confidenceLevel);
+                jsonObject.put("text", text);
+                return jsonObject.toString();
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return "";
+            }
+        }
+    }
+
+    public class UnityListener implements Listener {
+        public String objectName;
+        public String functionName;
+
+        @Override
+        public void OnSpeechRecognized(PhraseRecognizedEventArgs args) {
+            UnityPlayer.UnitySendMessage(objectName, functionName, args.toJSON());
+        }
     }
 }
