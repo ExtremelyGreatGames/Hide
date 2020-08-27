@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
-#if PLATFORM_ANDROID
+
+#if UNITY_ANDROID
 using UnityEngine.Android;
 #endif
 
-namespace Android
+namespace Hide.Android
 {
     /// <summary>
     /// Code snippet from: docs.unity3d.com/Manual/android-RequestingPermissions.html
@@ -11,7 +12,6 @@ namespace Android
     // todo: improve HASRPPermissionRationaleDialog
     public class HASRPPermissionRationaleDialog : MonoBehaviour
     {
-        
         const int kDialogWidth = 300;
         const int kDialogHeight = 100;
         private bool windowOpen = true;
@@ -22,18 +22,19 @@ namespace Android
             GUI.Button(new Rect(10, kDialogHeight - 30, 100, 20), "No");
             if (GUI.Button(new Rect(kDialogWidth - 110, kDialogHeight - 30, 100, 20), "Yes"))
             {
-#if PLATFORM_ANDROID
+#if UNITY_ANDROID
                 Permission.RequestUserPermission(Permission.Microphone);
-#endif
+#endif // UNITY_ANDROID
                 windowOpen = false;
             }
         }
 
-        void OnGUI ()
+        void OnGUI()
         {
             if (windowOpen)
             {
-                Rect rect = new Rect((Screen.width / 2) - (kDialogWidth / 2), (Screen.height / 2) - (kDialogHeight / 2), kDialogWidth, kDialogHeight);
+                Rect rect = new Rect((Screen.width / 2) - (kDialogWidth / 2), (Screen.height / 2) - (kDialogHeight / 2),
+                    kDialogWidth, kDialogHeight);
                 GUI.ModalWindow(0, rect, DoMyWindow, "Permissions Request Dialog");
             }
         }

@@ -1,10 +1,8 @@
 package com.condimentalgames.hide.androidmodule;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognitionListener;
@@ -23,9 +21,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-
 /**
  * - Sub classes are based on UnityEngine.Windows.Speech to match its functionalities.
  * - Handle permissions in Unity.
@@ -39,6 +34,7 @@ import androidx.core.content.ContextCompat;
  * 6. Add initializeSpeechRecognition
  * 7. Start listening
  */
+// todo: improve documentation
 public class SpeechRecognizerFragment extends Fragment implements RecognitionListener {
     private static final String TAG = "Unity:Hide";
     private static final String UNITY_FRAGMENT_TAG = "UNITY_SPEECH_RECOGNITION_FRAGMENT";
@@ -109,7 +105,7 @@ public class SpeechRecognizerFragment extends Fragment implements RecognitionLis
                 for (String keyWord :
                         keyWordList) {
                     if (matches.get(i).toLowerCase().contains(keyWord) && scores[i]>bestScore) {
-                        bestMatch = matches.get(i);
+                        bestMatch = keyWord;
                         break;
                     }
                 }
@@ -241,11 +237,39 @@ public class SpeechRecognizerFragment extends Fragment implements RecognitionLis
     /**
      * Call this onDisable for the MonoBehavior owning the class
      */
+    public void stopListening() {
+        Handler mainHandler = new Handler(activity.getMainLooper());
+        Runnable mainRunnable = new Runnable(){
+            @Override
+            public void run() {
+                if (speechRecognizer != null) {
+                    speechRecognizer.stopListening();
+                }
+            }
+        };
+        mainHandler.post(mainRunnable);
+    }
+
+    /**
+     * Call this onDisable for the MonoBehavior owning the class
+     */
     public void destroySpeechRecognizer() {
-        if (speechRecognizer != null) {
-            speechRecognizer.stopListening();
-            speechRecognizer.destroy();
-        }
+        Handler mainHandler = new Handler(activity.getMainLooper());
+        Runnable mainRunnable = new Runnable(){
+            @Override
+            public void run() {
+                if (speechRecognizer != null) {
+                    speechRecognizer.stopListening();
+                    speechRecognizer.destroy();
+                }
+            }
+        };
+        mainHandler.post(mainRunnable);
+    }
+
+    public void forceDestroy() {
+        destroySpeechRecognizer();
+        activity.getFragmentManager().beginTransaction().remove(this).commit();
     }
 
     private void onSpeechRecognized(PhraseRecognizedEventArgs args) {

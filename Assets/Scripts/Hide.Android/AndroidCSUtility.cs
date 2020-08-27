@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
-namespace Android
+namespace Hide.Android
 {
     // ReSharper disable once InconsistentNaming
-    public class AndroidCSUtility
+    public static class AndroidCSUtility
     {
+#if UNITY_ANDROID
         /// <summary>
         /// Reference: https://stackoverflow.com/a/42681889
         /// </summary>
@@ -27,5 +28,6 @@ namespace Android
 
             return arrayObject;
         }
+#endif // UNITY_ANDROID
     }
 }

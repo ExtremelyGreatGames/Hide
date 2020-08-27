@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Android
+namespace Hide.Speech.Android
 {
+#if UNITY_ANDROID
     [RequireComponent(typeof(HideAndroidSpeechRecognitionPlugin))]
+#endif // UNITY_ANDROID
     public class HASRPTest : MonoBehaviour
     {
+#if UNITY_ANDROID
         private HideAndroidSpeechRecognitionPlugin _plugin;
         
         private readonly Dictionary<string, string> _keywordDict = new Dictionary<string, string>
@@ -20,7 +22,7 @@ namespace Android
         public void OnPrepared()
         {
             _plugin = GetComponent<HideAndroidSpeechRecognitionPlugin>();
-            if (_plugin.IsUsable)
+            if (_plugin.IsUsable())
             {
                 _plugin.SetKeyword(_keywordDict.Keys.ToArray());
                 _plugin.OnPhraseRecognized += OnSpeechRecognized;
@@ -38,5 +40,6 @@ namespace Android
         }
 
         #endregion
+#endif // UNITY_ANDROID
     }
 }

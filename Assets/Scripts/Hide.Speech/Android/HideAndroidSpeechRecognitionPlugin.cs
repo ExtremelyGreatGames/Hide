@@ -1,15 +1,20 @@
-﻿using System;
+﻿#if UNITY_ANDROID
 using UnityEngine;
+using System;
+using Hide.Android;
 using UnityEngine.Android;
-using UnityEngine.Events;
 
-namespace Android
+namespace Hide.Speech.Android
 {
-    public class HideAndroidSpeechRecognitionPlugin : MonoBehaviour
+    /// <summary>
+    /// Never attach on a GameObject on Editor
+    /// </summary>
+    public class HideAndroidSpeechRecognitionPlugin : MonoBehaviour, ISpeechRecognition
     {
-        #if PLATFORM_ANDROID
+        #region Constants
+
         private const string PluginName = "com.condimentalgames.hide.androidmodule.SpeechRecognizerFragment";
-        
+
         private const string FuncCreateFromUnity = "createFromUnity";
         private const string FuncSetKeywords = "setKeywords";
         private const string FuncSetPollingRate = "setPollingRate";
@@ -20,15 +25,25 @@ namespace Android
         private const string FuncStartListening = "startListening";
         private const string FuncDestroySpeechRecognizer = "destroySpeechRecognizer";
         private const string FuncAddUnityListener = "addUnityListener";
+        private const string FuncStopListening = "stopListening";
+        private const string FuncForceDestroy = "forceDestroy";
 
         private const string FuncOnSpeechRecognized = "OnSpeechRecognizedAndroid";
-        
-        public UnityEvent onPrepared;
-        public event PhraseRecognizedDelegate OnPhraseRecognized;
-        
+
+        #endregion Constants
+
+        #region Fields
+
+        public event HidePhraseRecognitionArgs.RecognizedDelegate OnPhraseRecognized;
+        public event HidePhraseRecognitionArgs.OnPreparedDelegate OnPrepared;
+
         private AndroidJavaObject _joPlugin;
         private GameObject _dialog;
         private bool _isInitialized = false;
+
+        #endregion Fields
+
+        #region Events
 
         private void Start()
         {
@@ -50,26 +65,42 @@ namespace Android
             }
         }
 
+        private void OnDestroy()
+        {
+            _joPlugin.Call(FuncForceDestroy);
+        }
+
         /// <summary>
         /// DO NOT COPY THE NAME. THE REFLECTION SYSTEM WILL BREAK.
+        /// DO NOT MAKE PRIVATE. THE REFLECTION SYSTEM WILL BREAK.
         /// </summary>
         /// <param name="jsonArgs"></param>
         public void OnSpeechRecognizedAndroid(string jsonArgs)
         {
-            PhraseRecognizedDelegate phraseRecognized = OnPhraseRecognized;
-            
-            if (phraseRecognized == null) { return; }
+            var recognized = OnPhraseRecognized;
+
+            if (recognized == null)
+            {
+                return;
+            }
 
             var args = new HidePhraseRecognitionArgs();
             args.FromJsonOverwrite(jsonArgs);
-            phraseRecognized(args);
+            recognized(args);
         }
+
+        #endregion Events
+
+        #region Properties
 
         public bool IsPluginAvailable => _joPlugin != null;
         public bool HasPermissionToListen { private set; get; }
         public bool HasSpeechRecognition { private set; get; }
         public bool IsReady { private set; get; }
-        public bool IsUsable => IsReady && IsPluginAvailable && HasPermissionToListen && HasSpeechRecognition;
+
+        #endregion Properties
+
+        #region Methods
 
         private void Initialize()
         {
@@ -101,8 +132,23 @@ namespace Android
                 IsReady = _joPlugin.Call<bool>(FuncInitializeSpeechRecognizer);
             }
             
-            onPrepared.Invoke();
             _isInitialized = true;
+            
+            var prepared = OnPrepared;
+            prepared?.Invoke(); // == if(prepared != null) prepared.Invoke();
+        }
+
+        private void DebugIsUsableAssertion()
+        {
+            Debug.Assert(IsUsable(),
+                $"IsUsable: Either IsReady ({IsReady}), IsPluginAvailable " +
+                $"({IsPluginAvailable}), HasPermissionToListen ({HasPermissionToListen}), " +
+                $"HasSpeechRecognition ({HasSpeechRecognition}) is false");
+        }
+
+        public bool IsUsable()
+        {
+            return IsReady && IsPluginAvailable && HasPermissionToListen && HasSpeechRecognition;
         }
 
         public void SetKeyword(string[] keywordList)
@@ -114,18 +160,26 @@ namespace Android
 
         public void StartListening()
         {
-            Debug.Assert(IsUsable,
-                $"IsUsable: Either IsReady ({IsReady}), IsPluginAvailable " +
-                $"({IsPluginAvailable}), HasPermissionToListen ({HasPermissionToListen}), " +
-                $"HasSpeechRecognition ({HasSpeechRecognition}) is false");
+            DebugIsUsableAssertion();
             _joPlugin.Call(FuncStartListening);
         }
-        
+
+        public void StopListening()
+        {
+            DebugIsUsableAssertion();
+            _joPlugin.Call(FuncStopListening);
+        }
+
         /// <summary>
-        ///   <para>Delegate for OnPhraseRecognized event. Based on Windows.Speech.PhraseRecognizer</para>
+        /// OnDestroy() for this object destroys the plugin and the speech recognizer with it anyway.
         /// </summary>
-        /// <param name="args">Information about a phrase recognized event.</param>
-        public delegate void PhraseRecognizedDelegate(HidePhraseRecognitionArgs args);
-        #endif
+        public void DestroySpeechRecognizer()
+        {
+            DebugIsUsableAssertion();
+            _joPlugin.Call(FuncDestroySpeechRecognizer);
+        }
+
+        #endregion Methods
     }
 }
+#endif

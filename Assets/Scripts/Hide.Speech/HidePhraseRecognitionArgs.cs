@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Android
+namespace Hide.Speech
 {
     /// <summary>
     /// Based on Windows.Speech.PhraseRecognizedEventArgs
@@ -15,5 +15,13 @@ namespace Android
         {
             JsonUtility.FromJsonOverwrite(json, this);
         }
+        
+        /// <summary>
+        ///   <para>Delegate for OnPhraseRecognized event. Based on Windows.Speech.PhraseRecognizer</para>
+        /// </summary>
+        /// <param name="args">Information about a phrase recognized event.</param>
+        public delegate void RecognizedDelegate(HidePhraseRecognitionArgs args);
+
+        public delegate void OnPreparedDelegate();
     }
 }
