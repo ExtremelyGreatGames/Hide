@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/AllanTests/AndroidScene.unity
-    guid: a6a885ce98f54f742b402be23a542c60
+    path: Assets/Scenes/AllanTests/PortingScene.unity
+    guid: 9300a3575a5ebdc449e031a03c8ae69e
   m_configObjects: {}

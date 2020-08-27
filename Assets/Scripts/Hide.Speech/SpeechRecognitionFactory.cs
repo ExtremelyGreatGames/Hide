@@ -1,7 +1,11 @@
-﻿using System;
+﻿using UnityEngine;
+#if UNITY_ANDROID
 using Hide.Speech.Android;
+#endif // UNITY_ANDROID
+#if UNITY_STANDALONE_WIN
 using Hide.Speech.Windows;
-using UnityEngine;
+
+#endif // UNITY_STANDALONE_WIN
 
 namespace Hide.Speech
 {

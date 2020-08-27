@@ -70,6 +70,14 @@ namespace Hide.Speech.Android
             _joPlugin.Call(FuncForceDestroy);
         }
 
+        private void Reset()
+        {
+            if (GetType() == typeof(HideAndroidSpeechRecognitionPlugin))
+            {
+                DestroyImmediate( this );
+            }
+        }
+
         /// <summary>
         /// DO NOT COPY THE NAME. THE REFLECTION SYSTEM WILL BREAK.
         /// DO NOT MAKE PRIVATE. THE REFLECTION SYSTEM WILL BREAK.

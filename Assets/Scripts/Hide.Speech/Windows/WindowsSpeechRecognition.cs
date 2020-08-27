@@ -1,12 +1,13 @@
-﻿using System;
+﻿#if UNITY_STANDALONE_WIN
+using System;
 using UnityEngine;
 using UnityEngine.Windows.Speech;
-#if UNITY_STANDALONE_WIN
-
-#endif // UNITY_STANDALONE_WIN
 
 namespace Hide.Speech.Windows
 {
+    /// <summary>
+    /// Never add to component as an editor. Rely on SpeechRecognizer Component
+    /// </summary>
     public class WindowsSpeechRecognition : MonoBehaviour, ISpeechRecognition
     {
         public event HidePhraseRecognitionArgs.RecognizedDelegate OnPhraseRecognized;
@@ -16,44 +17,39 @@ namespace Hide.Speech.Windows
 
         private void Start()
         {
-#if UNITY_STANDALONE_WIN
             var onPrepared = OnPrepared;
             onPrepared?.Invoke();
-#endif // UNITY_STANDALONE_WIN
+        }
+        
+        private void Reset()
+        {
+            if (GetType() == typeof(WindowsSpeechRecognition))
+            {
+                DestroyImmediate( this );
+            }
         }
 
         public bool IsUsable()
         {
-#if UNITY_STANDALONE_WIN
             return true; // no special setups
-#else
-            return false;
-#endif
         }
 
         public void SetKeyword(string[] keywordList)
         {
-#if UNITY_STANDALONE_WIN
             _keywordRecognizer = new KeywordRecognizer(keywordList);
             _keywordRecognizer.OnPhraseRecognized += SpeechRecognized;
-#endif // UNITY_STANDALONE_WIN
         }
 
         public void StartListening()
         {
-#if UNITY_STANDALONE_WIN
             _keywordRecognizer.Start();
-#endif // UNITY_STANDALONE_WIN
         }
 
         public void StopListening()
         {
-#if UNITY_STANDALONE_WIN
             _keywordRecognizer.Stop();
-#endif // UNITY_STANDALONE_WIN
         }
 
-#if UNITY_STANDALONE_WIN
         private void SpeechRecognized(PhraseRecognizedEventArgs args)
         {
             var phraseRecognized = OnPhraseRecognized;
@@ -83,6 +79,6 @@ namespace Hide.Speech.Windows
             
             phraseRecognized(translatedArgs);
         }
-#endif // UNITY_STANDALONE_WIN
     }
 }
+#endif // UNITY_STANDALONE_WIN
