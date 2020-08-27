@@ -1,13 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Android
 {
-    public class PluginTest : MonoBehaviour
+    [RequireComponent(typeof(HideAndroidSpeechRecognitionPlugin))]
+    public class HasrpTest : MonoBehaviour
     {
-        private const string PluginName = "com.condimentalgames.hide.androidmodule.HideMainActivity";
+        private HideAndroidSpeechRecognitionPlugin _plugin;
+        
+        private Dictionary<string, string> keywordDict = new Dictionary<string, string>()
+        {
+            {"moo", "Cow"}, {"oink", "Pig"}, {"cluck", "Chicken"}, {"testing", "Testing"}
+        };
 
-        private static AndroidJavaClass _pluginClass;
+        #region Events
+
+        public void OnPrepared()
+        {
+            _plugin = GetComponent<HideAndroidSpeechRecognitionPlugin>();
+            _plugin.SetKeyword(keywordDict.Keys.ToArray());
+        }
+
+        #endregion
+        
+        /*private static AndroidJavaClass _pluginClass;
         private static AndroidJavaObject _pluginInstance;
 
         public static AndroidJavaClass PluginClass
@@ -34,14 +52,9 @@ namespace Android
 
                 return _pluginInstance;
             }
-        }
+        }*/
 
-        private void Start()
-        {
-            Debug.Log("Elapsed time: " + getElapsedTime());
-        }
-
-        private float _elapsedTime = 0;
+        /*private float _elapsedTime = 0;
 
         private void Update()
         {
@@ -65,6 +78,6 @@ namespace Android
             }
 
             return 0;
-        }
+        }*/
     }
 }
