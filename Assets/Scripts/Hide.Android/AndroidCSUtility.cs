@@ -1,33 +1,41 @@
-﻿using UnityEngine;
+﻿#if UNITY_ANDROID
+using UnityEngine;
 
 namespace Hide.Android
 {
-    // ReSharper disable once InconsistentNaming
+    /// <summary>
+    /// Utility class for Java-C# interaction
+    /// </summary>
     public static class AndroidCSUtility
     {
-#if UNITY_ANDROID
-        /// <summary>
-        /// Reference: https://stackoverflow.com/a/42681889
-        /// </summary>
+        private const string JavaArrayType = "java.lang.reflect.Array";
+        private const string JavaArrayFuncSet = "set";
+        
+        private const string JavaStringType = "java.lang.String";
+        private const string JavaStringFuncNewInstance = "newInstance";
+        
+        /// <summary>Converts C# string[] to Java String[]</summary>
+        /// <remarks>
+        /// Code snippet from: Foggzie. AndroidJavaObject.Call array passing error (Unity for Android).
+        /// stackoverflow.com/a/42681889
+        /// </remarks>
         /// <param name="values"></param>
         /// <returns></returns>
-        // ReSharper disable once InconsistentNaming
         public static AndroidJavaObject JavaArrayFromCS(string[] values)
         {
-            var arrayClass = new AndroidJavaClass("java.lang.reflect.Array");
+            var arrayClass = new AndroidJavaClass(JavaArrayType);
             var arrayObject = arrayClass.CallStatic<AndroidJavaObject>(
-                "newInstance",
-                new AndroidJavaClass("java.lang.String"),
+                JavaStringFuncNewInstance,
+                new AndroidJavaClass(JavaStringType),
                 values.Length);
-            for (int i = 0; i < values.Length; ++i)
+            for (var i = 0; i < values.Length; ++i)
             {
-                arrayClass.CallStatic("set",
+                arrayClass.CallStatic(JavaArrayFuncSet,
                     arrayObject, i,
-                    new AndroidJavaObject("java.lang.String", values[i]));
+                    new AndroidJavaObject(JavaStringType, values[i]));
             }
-
             return arrayObject;
         }
-#endif // UNITY_ANDROID
     }
 }
+#endif // UNITY_ANDROID

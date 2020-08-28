@@ -6,9 +6,10 @@ using UnityEngine.Android;
 
 namespace Hide.Android
 {
-    /// <summary>
-    /// Code snippet from: docs.unity3d.com/Manual/android-RequestingPermissions.html
-    /// </summary>
+    /// <remarks>
+    /// Code snippet from: Requesting Permissions. Unity.
+    /// docs.unity3d.com/Manual/android-RequestingPermissions.html
+    /// </remarks>
     // todo: improve HASRPPermissionRationaleDialog
     public class HASRPPermissionRationaleDialog : MonoBehaviour
     {

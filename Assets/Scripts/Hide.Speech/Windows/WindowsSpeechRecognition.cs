@@ -5,9 +5,8 @@ using UnityEngine.Windows.Speech;
 
 namespace Hide.Speech.Windows
 {
-    /// <summary>
-    /// Never add to component as an editor. Rely on SpeechRecognizer Component
-    /// </summary>
+    /// <summary>Handles the direct interaction between Unity and Windows</summary>
+    /// <remarks>Never attach on a GameObject on Editor. Rely on SpeechRecognizer Component.</remarks>
     public class WindowsSpeechRecognition : MonoBehaviour, ISpeechRecognition
     {
         public event HidePhraseRecognitionArgs.RecognizedDelegate OnPhraseRecognized;
@@ -31,7 +30,7 @@ namespace Hide.Speech.Windows
 
         public bool IsUsable()
         {
-            return true; // no special setups
+            return true; // this is always usable since no set up is needed
         }
 
         public void SetKeyword(string[] keywordList)

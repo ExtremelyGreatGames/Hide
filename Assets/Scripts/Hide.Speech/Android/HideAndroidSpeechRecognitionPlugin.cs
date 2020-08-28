@@ -1,20 +1,19 @@
 ﻿#if UNITY_ANDROID
 using UnityEngine;
-using System;
 using Hide.Android;
 using UnityEngine.Android;
 
 namespace Hide.Speech.Android
 {
-    /// <summary>
-    /// Never attach on a GameObject on Editor
-    /// </summary>
+    /// <summary>Handles the direct interaction between Unity and Android</summary>
+    /// <remarks>Never attach on a GameObject on Editor. Rely on SpeechRecognizer Component.</remarks>
     public class HideAndroidSpeechRecognitionPlugin : MonoBehaviour, ISpeechRecognition
     {
         #region Constants
 
         private const string PluginName = "com.condimentalgames.hide.androidmodule.SpeechRecognizerFragment";
 
+        // Android functions
         private const string FuncCreateFromUnity = "createFromUnity";
         private const string FuncSetKeywords = "setKeywords";
         private const string FuncSetPollingRate = "setPollingRate";
@@ -28,6 +27,7 @@ namespace Hide.Speech.Android
         private const string FuncStopListening = "stopListening";
         private const string FuncForceDestroy = "forceDestroy";
 
+        // Unity functions
         private const string FuncOnSpeechRecognized = "OnSpeechRecognizedAndroid";
 
         #endregion Constants
@@ -79,10 +79,11 @@ namespace Hide.Speech.Android
         }
 
         /// <summary>
+        /// This function is called by an Android event.
         /// DO NOT COPY THE NAME. THE REFLECTION SYSTEM WILL BREAK.
         /// DO NOT MAKE PRIVATE. THE REFLECTION SYSTEM WILL BREAK.
         /// </summary>
-        /// <param name="jsonArgs"></param>
+        /// <param name="jsonArgs">JSON string</param>
         public void OnSpeechRecognizedAndroid(string jsonArgs)
         {
             var recognized = OnPhraseRecognized;
@@ -110,6 +111,57 @@ namespace Hide.Speech.Android
 
         #region Methods
 
+        public bool IsUsable()
+        {
+            return IsReady && IsPluginAvailable && HasPermissionToListen && HasSpeechRecognition;
+        }
+
+        public void SetKeyword(string[] keywordList)
+        {
+            Debug.Assert(_joPlugin != null, 
+                "_joPlugin != null: Use OnPrepared to ensure the plugin is ready");
+            _joPlugin.Call(FuncSetKeywords, AndroidCSUtility.JavaArrayFromCS(keywordList));
+        }
+
+        public void StartListening()
+        {
+            DebugIsUsableAssertion();
+            _joPlugin.Call(FuncStartListening);
+        }
+
+        public void StopListening()
+        {
+            DebugIsUsableAssertion();
+            _joPlugin.Call(FuncStopListening);
+        }
+
+        public void SetPollingRate(long milliseconds)
+        {
+            DebugIsUsableAssertion();
+            _joPlugin.Call(FuncSetPollingRate, milliseconds);
+        }
+
+        public void SetNoMatchErrorTolerance(long milliseconds)
+        {
+            DebugIsUsableAssertion();
+            _joPlugin.Call(FuncSetNoMatchErrorTolerance, milliseconds);
+        }
+
+        public void SetMaxResultCount(int count)
+        {
+            DebugIsUsableAssertion();
+            _joPlugin.Call(FuncSetMaxResultCount, count);
+        }
+
+        /// <summary>
+        /// OnDestroy() for this object destroys the plugin and the speech recognizer with it anyway.
+        /// </summary>
+        public void DestroySpeechRecognizer()
+        {
+            DebugIsUsableAssertion();
+            _joPlugin.Call(FuncDestroySpeechRecognizer);
+        }
+        
         private void Initialize()
         {
             HasPermissionToListen = Permission.HasUserAuthorizedPermission(Permission.Microphone);
@@ -152,39 +204,6 @@ namespace Hide.Speech.Android
                 $"IsUsable: Either IsReady ({IsReady}), IsPluginAvailable " +
                 $"({IsPluginAvailable}), HasPermissionToListen ({HasPermissionToListen}), " +
                 $"HasSpeechRecognition ({HasSpeechRecognition}) is false");
-        }
-
-        public bool IsUsable()
-        {
-            return IsReady && IsPluginAvailable && HasPermissionToListen && HasSpeechRecognition;
-        }
-
-        public void SetKeyword(string[] keywordList)
-        {
-            Debug.Assert(_joPlugin != null, 
-                "_joPlugin != null: Use OnPrepared to ensure the plugin is ready");
-            _joPlugin.Call(FuncSetKeywords, AndroidCSUtility.JavaArrayFromCS(keywordList));
-        }
-
-        public void StartListening()
-        {
-            DebugIsUsableAssertion();
-            _joPlugin.Call(FuncStartListening);
-        }
-
-        public void StopListening()
-        {
-            DebugIsUsableAssertion();
-            _joPlugin.Call(FuncStopListening);
-        }
-
-        /// <summary>
-        /// OnDestroy() for this object destroys the plugin and the speech recognizer with it anyway.
-        /// </summary>
-        public void DestroySpeechRecognizer()
-        {
-            DebugIsUsableAssertion();
-            _joPlugin.Call(FuncDestroySpeechRecognizer);
         }
 
         #endregion Methods
