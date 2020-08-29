@@ -134,10 +134,9 @@ GameObject:
   - component: {fileID: 72147388}
   - component: {fileID: 72147387}
   - component: {fileID: 72147386}
-  - component: {fileID: 72147389}
   - component: {fileID: 72147391}
   - component: {fileID: 72147390}
-  - component: {fileID: 72147392}
+  - component: {fileID: 72147389}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -238,9 +237,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 72147385}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e015dbfc20c1ca247b8202ee81c7a615, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b59f038ed0b03847b7fb7cf68c01b65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 3
 --- !u!70 &72147390
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -278,19 +278,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &72147392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 72147385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebf4feb3e74fbca41b44ba851aa5730b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 4.5
 --- !u!1 &1858232211
 GameObject:
   m_ObjectHideFlags: 0
