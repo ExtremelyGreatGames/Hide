@@ -35,6 +35,9 @@ public class Transformation : MonoBehaviour
 
     void Update()
     {
+        return;
+        // todo implement this
+        
         if (Input.GetButtonDown("Speak")) keywordRecognizer.Start();
         if (Input.GetButtonUp("Speak"))   keywordRecognizer.Stop();
     }
