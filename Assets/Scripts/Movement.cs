@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    void Update()
+
+    public float moveSpeed;
+
+    Animator animator;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
+    void FixedUpdate()
     {
         float hori = Input.GetAxisRaw("Horizontal");
         float verti = Input.GetAxisRaw("Vertical");
 
-        if (hori != 0) {
+        Vector2 moveVals = new Vector2(hori,verti);
+        if (hori != 0 || verti != 0) transform.Translate(moveVals.normalized * Time.deltaTime * moveSpeed);
 
-        }
-
-        if (verti != 0) {
-            
-        }
+        animator.SetFloat("SpeedX", hori);
+        animator.SetBool("SpeedY", verti != 0);
     }
 }
