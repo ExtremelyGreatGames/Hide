@@ -17,15 +17,21 @@ public class PlayerControls : MonoBehaviour
     // ================== Input System Setup ============================
     void Awake()
     {
+        /*****************************************************/
+        /* Need to find a way to switch between hider/seeker */
+        /*****************************************************/
+
         controls = new Inputs();
 
         controls.Hider.Movement.performed += ctx => _move = ctx.ReadValue<Vector2>();
         controls.Hider.Movement.canceled += ctx => _move = Vector2.zero;
 
-        controls.Hider.Speak.performed += ctx => TestPress();
-        controls.Hider.Speak.canceled += ctx => TestRelease();
+        controls.Hider.Speak.performed += ctx => OnSpeakPressed();
+        controls.Hider.Speak.canceled += ctx => OnSpeakReleased();
+
+        controls.Hider.Ability.performed += ctx => OnAbilityPressed();
     }
-    
+
     void OnEnable()
     {
         controls.Hider.Enable();
@@ -34,6 +40,18 @@ public class PlayerControls : MonoBehaviour
     void OnDisable()
     {
         controls.Hider.Disable();
+    }
+
+    void OnSpeakPressed () {
+        keywordRecognizer.Start();
+    }
+
+    void OnSpeakReleased () {
+        keywordRecognizer.Stop();
+    }
+
+    void OnAbilityPressed () {
+        Debug.Log("Ability should activate. based on current animal");
     }
     // ==================================================================
     
@@ -59,19 +77,9 @@ public class PlayerControls : MonoBehaviour
         transform.Translate(_move * Time.deltaTime * moveSpeed);
     }
 
-    void TestPress() {
-        Debug.Log("Started recognizer");
-        keywordRecognizer.Start();
-    }
-
-    void TestRelease() {
-        Debug.Log("Stopped recognizer");
-        keywordRecognizer.Stop();
-    }
-
     void speechRecognized(PhraseRecognizedEventArgs args) {
         animator.SetTrigger("Change" + keywordDict[args.text]);
-        Debug.Log("speech was recognized");
+        //Debug.Log("speech was recognized");
     }
 
 }
