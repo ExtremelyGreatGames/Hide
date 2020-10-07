@@ -35,6 +35,7 @@ public class PlayerMovement : NetworkBehaviour
         controls.Hider.Disable();
     }
 
+    [Client]
     void Update() {
         if (!isLocalPlayer) return;
 
