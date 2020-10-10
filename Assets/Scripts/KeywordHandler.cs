@@ -1,18 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Windows.Speech;
 
 public class KeywordHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public KeywordRecognizer keywordRecognizer;
+    Dictionary<string, string> keywordDict = new Dictionary<string, string>();
+
+    void Start() {
+        // populate keywords dictionary. *there has to be a better way to do this*
+        keywordDict.Add("moo","Cow");
+        keywordDict.Add("oink","Pig");
+        keywordDict.Add("cluck","Chicken");
+        keywordDict.Add("cow","Cow");
+
+        keywordRecognizer = new KeywordRecognizer(keywordDict.Keys.ToArray());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public KeywordRecognizer GetKeywordRecognizer() {
+        return keywordRecognizer;
     }
 }
