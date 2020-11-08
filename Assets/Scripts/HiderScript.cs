@@ -41,10 +41,12 @@ public class HiderScript : NetworkBehaviour
 
         // keywordRecognizer = new KeywordRecognizer(keywordDict.Keys.ToArray());
         keywordHandler = GameObject.Find("KeywordHandler").GetComponent<KeywordHandler>();
+        if (keywordHandler == null) Debug.Log("Keyword Handler not found");
+        else Debug.Log("Keyword Handler found");
         keywordRecognizer = keywordHandler.GetKeywordRecognizer();
 
         //keywordRecognizer.OnPhraseRecognized += speechRecognized;
-        keywordHandler.keywordRecognizer.OnPhraseRecognized += speechRecognized;
+        keywordHandler.GetKeywordRecognizer().OnPhraseRecognized += speechRecognized;
         //Debug.Log(keywordDict.Keys.ToArray());
     }
 
@@ -69,7 +71,8 @@ public class HiderScript : NetworkBehaviour
             // change on local
             sr.color = c;
         }
-        
+        Debug.Log("speech was recognized from: " + netId);
+
     }
 
     // TODO replace with real transformation code
