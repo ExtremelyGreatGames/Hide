@@ -11,15 +11,25 @@ public class KeywordHandler : MonoBehaviour
 
     void Start() {
         // populate keywords dictionary. *there has to be a better way to do this*
-        keywordDict.Add("moo","Cow");
-        keywordDict.Add("oink","Pig");
-        keywordDict.Add("cluck","Chicken");
-        keywordDict.Add("cow","Cow");
+        keywordDict.Add("moo", "Cow");
+        keywordDict.Add("oink", "Pig");
+        keywordDict.Add("cluck", "Chicken");
+        keywordDict.Add("cow", "Cow");
 
         keywordRecognizer = new KeywordRecognizer(keywordDict.Keys.ToArray());
     }
 
     public KeywordRecognizer GetKeywordRecognizer() {
         return keywordRecognizer;
+    }
+
+    public void StartKeywordRecognizer () {
+        // populate keywords dictionary. *there has to be a better way to do this*
+        keywordDict.Add("moo", "Cow");
+        keywordDict.Add("oink", "Pig");
+        keywordDict.Add("cluck", "Chicken");
+        keywordDict.Add("cow", "Cow");
+
+        keywordRecognizer = new KeywordRecognizer(keywordDict.Keys.ToArray());
     }
 }
