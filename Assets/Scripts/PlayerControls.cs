@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
+#if UNITY_STANDALONE_WIN
 using UnityEngine.Windows.Speech;
+#endif
 
 public class PlayerControls : MonoBehaviour
 {
+#if UNITY_STANDALONE_WIN
     public float moveSpeed;
 
     Inputs controls;
@@ -88,5 +92,5 @@ public class PlayerControls : MonoBehaviour
         animator.SetTrigger("Change" + keywordDict[args.text]);
         Debug.Log("speech was recognized from: " + gameObject.name);
     }
-
+#endif
 }

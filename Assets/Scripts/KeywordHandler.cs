@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
+#if UNITY_STANDALONE_WIN
 using UnityEngine.Windows.Speech;
+#endif
 
 public class KeywordHandler : MonoBehaviour
 {
+#if UNITY_STANDALONE_WIN
     public KeywordRecognizer keywordRecognizer;
     Dictionary<string, string> keywordDict = new Dictionary<string, string>();
 
@@ -32,4 +36,5 @@ public class KeywordHandler : MonoBehaviour
 
         keywordRecognizer = new KeywordRecognizer(keywordDict.Keys.ToArray());
     }
+#endif
 }

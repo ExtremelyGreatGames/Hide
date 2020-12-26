@@ -130,6 +130,9 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -646,7 +649,7 @@ PlayerSettings:
   scriptingDefineSymbols:
     1: CROSS_PLATFORM_INPUT;MIRROR;MIRROR_1726_OR_NEWER;MIRROR_3_0_OR_NEWER;MIRROR_3_12_OR_NEWER;MIRROR_4_0_OR_NEWER;MIRROR_5_0_OR_NEWER;MIRROR_6_0_OR_NEWER;MIRROR_7_0_OR_NEWER;MIRROR_8_0_OR_NEWER;MIRROR_9_0_OR_NEWER;MIRROR_10_0_OR_NEWER;MIRROR_11_0_OR_NEWER;MIRROR_12_0_OR_NEWER;MIRROR_13_0_OR_NEWER;MIRROR_14_0_OR_NEWER;MIRROR_15_0_OR_NEWER;MIRROR_16_0_OR_NEWER;MIRROR_17_0_OR_NEWER
     4: CROSS_PLATFORM_INPUT;MOBILE_INPUT
-    7: CROSS_PLATFORM_INPUT;MOBILE_INPUT
+    7: CROSS_PLATFORM_INPUT;MOBILE_INPUT;MIRROR;MIRROR_1726_OR_NEWER;MIRROR_3_0_OR_NEWER;MIRROR_3_12_OR_NEWER;MIRROR_4_0_OR_NEWER;MIRROR_5_0_OR_NEWER;MIRROR_6_0_OR_NEWER;MIRROR_7_0_OR_NEWER;MIRROR_8_0_OR_NEWER;MIRROR_9_0_OR_NEWER;MIRROR_10_0_OR_NEWER;MIRROR_11_0_OR_NEWER;MIRROR_12_0_OR_NEWER;MIRROR_13_0_OR_NEWER;MIRROR_14_0_OR_NEWER;MIRROR_15_0_OR_NEWER;MIRROR_16_0_OR_NEWER;MIRROR_17_0_OR_NEWER
     14: MOBILE_INPUT
   platformArchitecture: {}
   scriptingBackend: {}
@@ -686,7 +689,7 @@ PlayerSettings:
   metroSplashScreenUseBackgroundColor: 0
   platformCapabilities:
     WindowsStoreApps:
-      CodeGeneration: False
+      EnterpriseAuthentication: False
       VideosLibrary: False
       Location: False
       HumanInterfaceDevice: False
@@ -720,10 +723,10 @@ PlayerSettings:
       PointOfService: False
       RecordedCallsFolder: False
       Contacts: False
-      Proximity: False
       InternetClient: False
+      CodeGeneration: False
       BackgroundMediaPlayback: False
-      EnterpriseAuthentication: False
+      Proximity: False
   metroTargetDeviceFamilies:
     Desktop: False
     Holographic: False
