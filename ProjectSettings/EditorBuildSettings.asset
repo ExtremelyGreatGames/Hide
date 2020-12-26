@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LobbyScene.unity
     guid: 645a355f2a0859c4dac197d2228b89ca
+  - enabled: 0
+    path: Assets/Mirror/Examples/Basic/Scenes/Example.unity
+    guid: b30904751905d3f4dacde62ac85ec7c2
   m_configObjects: {}

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+#if UNITY_STANDALONE_WIN
 using UnityEngine.Windows.Speech;
+#endif
 using Mirror;
 
 public class HiderScript : NetworkBehaviour
 {
+#if UNITY_STANDALONE_WIN
     Inputs controls;
     KeywordRecognizer keywordRecognizer;
     Dictionary<string, string> keywordDict = new Dictionary<string, string>();
@@ -96,4 +99,5 @@ public class HiderScript : NetworkBehaviour
             sr.color = c;
         }
     }
+#endif
 }
