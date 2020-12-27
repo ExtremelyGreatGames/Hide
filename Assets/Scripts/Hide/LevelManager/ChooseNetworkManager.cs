@@ -1,11 +1,10 @@
-﻿using System;
-using Hide.Network;
+﻿using Hide.Network;
 using MLAPI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hide.SceneManager
+namespace Hide.LevelManager
 {
     /// <summary>
     /// NetworkChoiceManager
@@ -19,20 +18,24 @@ namespace Hide.SceneManager
     public class ChooseNetworkManager : MonoBehaviour
     {
         public string defaultIpAddress = "127.0.0.1";
-        
+
+        public Animator animatorUi;
+        public TextMeshProUGUI textDetails;
         public TextMeshProUGUI textInput;
         public Button buttonClient;
         public Button buttonHost;
 
+        private NetworkingManager _networkingManager;
         private GameNetwork _gameNetwork;
-        
+
         private void Start()
         {
             Debug.Assert(textInput != null);
             Debug.Assert(buttonClient != null);
             Debug.Assert(buttonHost != null);
-
-            _gameNetwork = NetworkingManager.Singleton.GetComponent<GameNetwork>();
+            
+            _networkingManager = NetworkingManager.Singleton;
+            _gameNetwork = GameNetwork.Instance;
             textInput.text = defaultIpAddress;
             
             buttonClient.onClick.AddListener(HandleButtonClientClick);
@@ -42,11 +45,13 @@ namespace Hide.SceneManager
         private void HandleButtonHostClick()
         {
             _gameNetwork.PlayAsHost();
+            // todo: handle not connecting correctly
         }
 
         private void HandleButtonClientClick()
         {
             _gameNetwork.PlayAsClient(textInput.text);
+            // todo: handle not connecting correctly
         }
     }
 }

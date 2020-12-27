@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 96097952}
   - component: {fileID: 96097951}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: LobbyCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -327,9 +327,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1525554519}
-  - {fileID: 1479057033}
-  - {fileID: 1150666867}
+  - {fileID: 1074813386}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -637,8 +635,8 @@ GameObject:
   m_Component:
   - component: {fileID: 912280369}
   - component: {fileID: 912280368}
-  - component: {fileID: 912280370}
   - component: {fileID: 912280371}
+  - component: {fileID: 912280370}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -723,6 +721,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0be037dbb3ba6a4bb364fe205e8aab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onClientConnectedEvent: {fileID: 11400000, guid: baa8970e5f95b9d4aaef5076dfac98f0, type: 2}
+  onClientDisconnectedEvent: {fileID: 11400000, guid: ec6d7d470bdc30c4bb70cbfbb99f4d77, type: 2}
 --- !u!114 &912280371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -746,6 +746,44 @@ MonoBehaviour:
   UseMLAPIRelay: 0
   MLAPIRelayAddress: 184.72.104.138
   MLAPIRelayPort: 8888
+--- !u!1 &1074813385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1074813386}
+  m_Layer: 5
+  m_Name: ChoooseNetworkUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1074813386
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074813385}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1525554519}
+  - {fileID: 1479057033}
+  - {fileID: 1150666867}
+  m_Father: {fileID: 96097954}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1150666866
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,12 +810,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1150666866}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1328290698}
-  m_Father: {fileID: 96097954}
+  m_Father: {fileID: 1074813386}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1132,12 +1170,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1479057032}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1982903229}
-  m_Father: {fileID: 96097954}
+  m_Father: {fileID: 1074813386}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1252,12 +1290,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525554518}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 737158257}
-  m_Father: {fileID: 96097954}
+  m_Father: {fileID: 1074813386}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1680,6 +1718,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d42ff4eefd85457a86411f59b3a570b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultIpAddress: 127.0.0.1
+  animatorUi: {fileID: 0}
+  textDetails: {fileID: 0}
   textInput: {fileID: 1291083322}
   buttonClient: {fileID: 1479057034}
   buttonHost: {fileID: 1525554520}

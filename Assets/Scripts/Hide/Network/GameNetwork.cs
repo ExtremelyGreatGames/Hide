@@ -4,6 +4,7 @@ using MLAPI;
 using MLAPI.SceneManagement;
 using MLAPI.Transports.Tasks;
 using MLAPI.Transports.UNET;
+using RoboRyanTron.Unite2017.Events;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,9 @@ namespace Hide.Network
     [RequireComponent(typeof(NetworkingManager))]
     public class GameNetwork : MonoBehaviour
     {
+        public GameEvent onClientConnectedEvent;
+        public GameEvent onClientDisconnectedEvent;
+        
         private UserType _userType;
         private static GameNetwork _gameNetwork = null;
         private NetworkingManager _networkingManager;
@@ -37,10 +41,11 @@ namespace Hide.Network
                 {
                     _gameNetwork = NetworkingManager.Singleton.GetComponent<GameNetwork>();
                 }
-
                 return _gameNetwork;
             }
         }
+        
+        
 
         private enum UserType
         {
@@ -78,7 +83,7 @@ namespace Hide.Network
         {
             // todo: OnClientConnected
             Debug.LogWarning($"Client connected {clientId}");
-            Debug.LogWarning($"IP: {_unetTransport.ConnectAddress} Port: {_unetTransport.ConnectPort}");
+            onClientConnectedEvent.Raise();
         }
 
         private void ApprovalCheck(
@@ -124,7 +129,9 @@ namespace Hide.Network
             _socketTasks = _networkingManager.StartHost();
             NetworkSceneManager.SwitchScene("LobbyScene");
             Debug.Log("Play host!");
-            // UnityEngine.SceneManagement.SceneManager.LoadScene("Scenes/MLAPI/LobbyScene");
+            
+            // forcing client connected here because it won't trigger in host
+            // todo: change ui
         }
 
         public void PlayAsClient(string ipAddress)
@@ -134,7 +141,7 @@ namespace Hide.Network
             _userType = UserType.Client;
             _socketTasks = _networkingManager.StartClient();
             Debug.Log($"Play client: {encodedIpAddress}");
-            // UnityEngine.SceneManagement.SceneManager.LoadScene("Scenes/MLAPI/LobbyScene");
+            // todo: change ui
         }
 
         /// <summary>

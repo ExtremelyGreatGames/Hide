@@ -7,8 +7,8 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/MLAPI/ChooseNetworkScene.unity
-    guid: dcd6df21c69feb74fa15f00028814efc
+    guid: ad4ed3addb95602469263b2192b0345c
   - enabled: 1
     path: Assets/Scenes/MLAPI/LobbyScene.unity
-    guid: 2c6a601d3e477e542ad005103b3df869
+    guid: dcd6df21c69feb74fa15f00028814efc
   m_configObjects: {}
