@@ -402,7 +402,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f6082f5cf9342a2b3ddd51c402302c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
   soundPairsArray:
   - sound: testing
     animal: Cow
@@ -767,6 +766,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1363132347}
   - component: {fileID: 1363132346}
+  - component: {fileID: 1363132349}
+  - component: {fileID: 1363132348}
   m_Layer: 0
   m_Name: PlayerPawnTest
   m_TagString: Untagged
@@ -839,6 +840,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1363132348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363132345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e20a9f6e054640018e201b599d9605ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  move: {x: 0, y: 0}
+--- !u!95 &1363132349
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363132345}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1760132484
 GameObject:
   m_ObjectHideFlags: 0
@@ -1005,6 +1039,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2132914777}
+  - component: {fileID: 2132914778}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -1026,6 +1061,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2132914778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2132914776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e94ce355e24552bf27479e64ca18ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  externalInput: {fileID: 146295464}
+  pawnController: {fileID: 1363132348}
 --- !u!1001 &7588632984222237940
 PrefabInstance:
   m_ObjectHideFlags: 0

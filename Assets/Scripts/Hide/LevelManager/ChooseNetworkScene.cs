@@ -15,7 +15,7 @@ namespace Hide.LevelManager
     /// A: (1) Since GameNetwork is attached to NetworkManager, on the second time
     /// we arrive in the scene, our scene's GameNetwork gets destroyed. The reference
     /// we made to the buttons will be lost.
-    public class ChooseNetworkManager : MonoBehaviour
+    public class ChooseNetworkScene : MonoBehaviour
     {
         public string defaultIpAddress = "127.0.0.1";
 

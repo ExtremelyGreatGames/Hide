@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Hide.Speech;
 using UnityEngine;
-using UnityEngine.Windows.Speech;
 
 namespace Hide.System
 {
@@ -15,19 +14,18 @@ namespace Hide.System
     [RequireComponent(typeof(SpeechRecognizer))]
     public class ExternalInput : MonoBehaviour
     {
-        public float moveSpeed = 3f;
-        public SoundPairs[] soundPairsArray = new []
-        {
+        public SoundPairs[] soundPairsArray = {
             new SoundPairs { sound = "moo", animal = "Cow" },
             new SoundPairs { sound = "oink", animal = "Pig" },
             new SoundPairs { sound = "cluck", animal = "Chicken" },
         };
 
         private Inputs controls;
-        private Vector2 _move = Vector2.zero;
-        private Animator _animator;
         private SpeechRecognizer _speechRecognizer;
         private KeywordHandler _keywordHandler;
+        /* We need hasPossession because doing null checks are slow */
+        private bool hasPossesion = false;
+        private PawnController _pawnController;
 
         private Dictionary<string, string> _keywordDict = new Dictionary<string, string>();
 
@@ -40,24 +38,27 @@ namespace Hide.System
 
             controls.Hider.Movement.performed += ctx =>
             {
-                _move = ctx.ReadValue<Vector2>();
+                if (hasPossesion)
+                {
+                    _pawnController.move = ctx.ReadValue<Vector2>();   
+                }
             };
-            controls.Hider.Movement.canceled += ctx => _move = Vector2.zero;
+            controls.Hider.Movement.canceled += ctx =>
+            {
+                if (hasPossesion)
+                {
+                    _pawnController.move = Vector2.zero;
+                }
+            };
 
             controls.Hider.Speak.performed += ctx => OnSpeakPressed();
             controls.Hider.Speak.canceled += ctx => OnSpeakReleased();
 
             controls.Hider.Ability.performed += ctx => OnAbilityPressed();
             
-            
             _speechRecognizer = GetComponent<SpeechRecognizer>();
             _speechRecognizer.onPreparedEvent.AddListener(OnSpeechRecognizerPrepared);
             _speechRecognizer.onSpeechRecognizedEvent.AddListener(SpeechRecognized);
-        }
-
-        void Update()
-        {
-            transform.Translate(_move * (Time.deltaTime * moveSpeed));
         }
 
         void OnEnable()
@@ -91,12 +92,11 @@ namespace Hide.System
                 _keywordDict[pair.sound] = pair.animal;
             }
             
-            _animator = GetComponent<Animator>();
             _speechRecognizer = GetComponent<SpeechRecognizer>();
             _speechRecognizer.SetKeyword(_keywordDict.Keys.ToArray());
             // keywordRecognizer.OnPhraseRecognized += speechRecognized; is assigned through editor
             // no buttons in Android too lazy too configure
-            _speechRecognizer.StartListening();
+            _speechRecognizer.StartListening(); // todo: remove after debug
 #if UNITY_ANDROID
         _speechRecognizer.StartListening();
 #endif // UNITY_ANDROID
@@ -109,8 +109,30 @@ namespace Hide.System
 
         void SpeechRecognized(HidePhraseRecognitionArgs args)
         {
-            _animator.SetTrigger("Change" + _keywordDict[args.text]);
-            Debug.Log("speech was recognized from: " + gameObject.name);
+            if (hasPossesion)
+            {
+                _pawnController.SpeechRecognized(args, _keywordDict);
+            }
+        }
+
+        public void Possess(PawnController pawnController)
+        {
+            if (_pawnController == null && !pawnController.IsPossessed)
+            {
+                hasPossesion = true;
+                _pawnController = pawnController;
+                pawnController.IsPossessed = true;
+            }
+        }
+
+        public void Depossess()
+        {
+            if (_pawnController != null)
+            {
+                hasPossesion = false;
+                _pawnController.IsPossessed = false;
+                _pawnController = null;
+            }
         }
     }
 
