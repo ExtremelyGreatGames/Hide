@@ -48,7 +48,7 @@ namespace Hide.Speech
 
         private ISpeechRecognition _speechRecognition;
 
-        private void Awake()
+        private void Start()
         {
             _speechRecognition = SpeechRecognitionFactory.Create();
             _speechRecognition.OnPrepared += OnPrepared;

@@ -12,7 +12,7 @@ public class TransformationPorted : MonoBehaviour
 
     private readonly Dictionary<string, string> _keywordDict = new Dictionary<string, string>
     {
-        {"moo", "Cow"}, {"oink", "Pig"}, {"cluck", "Chicken"}
+        {"testing", "Cow"}, {"oink", "Pig"}, {"one", "Chicken"}
     };
 
     public void OnSpeechRecognizerPrepared()
@@ -37,6 +37,7 @@ public class TransformationPorted : MonoBehaviour
 
     public void SpeechRecognized(HidePhraseRecognitionArgs args)
     {
+        Debug.Log(args.text);
         _animator.SetTrigger("Change" + _keywordDict[args.text]);
     }
 }
