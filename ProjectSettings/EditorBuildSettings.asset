@@ -6,9 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MLAPI/ChooseNetworkScene.unity
-    guid: ad4ed3addb95602469263b2192b0345c
+    path: Assets/Scenes/Forge/HideMultiplayerMenu.unity
+    guid: 60b46db71bf369e47842fea16f0c3c93
   - enabled: 1
-    path: Assets/Scenes/MLAPI/LobbyScene.unity
-    guid: dcd6df21c69feb74fa15f00028814efc
+    path: Assets/Scenes/Forge/HideLobby.unity
+    guid: b90c6e888c76a334cba050d120d82100
+  - enabled: 1
+    path: Assets/Scenes/Forge/HideGame.unity
+    guid: 092166c8335d8ec429c40e13b84f0fe0
   m_configObjects: {}
