@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 471382}
   - component: {fileID: 11439882}
+  - component: {fileID: -3889080901873186397}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -50,5 +51,20 @@ MonoBehaviour:
   - {fileID: 1000012738253334, guid: feb25ecf90a8d8b4ab922a455249997b, type: 3}
   NetworkCameraNetworkObject:
   - {fileID: 139536, guid: 661f29f0c0c86fa47b6015bd602d0ac6, type: 3}
+  PlayerNetworkObject:
+  - {fileID: 705914002552688293, guid: 26ef4fd36dab7ad419f23088c95a60fe, type: 3}
   TestNetworkObject: []
+  GameLogicNetworkObject: []
   automaticScenes: 1
+--- !u!114 &-3889080901873186397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac28cea9534d4ad888b4cfffee95c38b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

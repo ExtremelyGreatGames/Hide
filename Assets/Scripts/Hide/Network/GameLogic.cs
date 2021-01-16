@@ -1,6 +1,8 @@
 ﻿using BeardedManStudios.Forge.Networking;
 using BeardedManStudios.Forge.Networking.Generated;
+using BeardedManStudios.Forge.Networking.Unity;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using NotImplementedException = System.NotImplementedException;
 
 namespace Hide.Network
@@ -11,6 +13,7 @@ namespace Hide.Network
     /// </summary>
     public class GameLogic : GameLogicBehavior
     {
+        private HidePlayer _localPlayer;
         public static GameLogic Instance { get; private set; }
         
         private void Awake()
@@ -27,10 +30,32 @@ namespace Hide.Network
             DontDestroyOnLoad(gameObject);
         }
 
+        private void OnEnable()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
         public override void IdentifyRole(RpcArgs args)
         {
             // todo: GameLogic.IdentifyRole
             throw new NotImplementedException();
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+        {
+            if (scene.name.Equals("HideGame"))
+            {
+                NetworkManager.Instance.InstantiatePlayer(position: new Vector3(Random.value * 5f, Random.value * 5f));
+            }
+            else
+            {
+                Debug.Log($"Game logic detect scene change to {scene.name}");
+            }
         }
     }
 }

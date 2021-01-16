@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using BeardedManStudios.Forge.Networking.Unity;
+using Hide.Network;
 using Hide.Speech;
 using UnityEngine;
 
 namespace Hide.System
 {
     [RequireComponent(typeof(Animator))]
-    public class PawnController : MonoBehaviour
+    public class HidePawn : MonoBehaviour
     {
         public float moveSpeed = 3f;
         public Vector2 move = Vector2.zero;

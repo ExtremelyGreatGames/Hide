@@ -25,7 +25,7 @@ namespace Hide.System
         private KeywordHandler _keywordHandler;
         /* We need hasPossession because doing null checks are slow */
         private bool hasPossesion = false;
-        private PawnController _pawnController;
+        private HidePawn _hidePawn;
 
         private Dictionary<string, string> _keywordDict = new Dictionary<string, string>();
 
@@ -40,14 +40,14 @@ namespace Hide.System
             {
                 if (hasPossesion)
                 {
-                    _pawnController.move = ctx.ReadValue<Vector2>();   
+                    _hidePawn.move = ctx.ReadValue<Vector2>();   
                 }
             };
             controls.Hider.Movement.canceled += ctx =>
             {
                 if (hasPossesion)
                 {
-                    _pawnController.move = Vector2.zero;
+                    _hidePawn.move = Vector2.zero;
                 }
             };
 
@@ -111,27 +111,31 @@ namespace Hide.System
         {
             if (hasPossesion)
             {
-                _pawnController.SpeechRecognized(args, _keywordDict);
+                _hidePawn.SpeechRecognized(args, _keywordDict);
             }
         }
 
-        public void Possess(PawnController pawnController)
+        public void Possess(HidePawn hidePawn)
         {
-            if (_pawnController == null && !pawnController.IsPossessed)
+            if (_hidePawn == null && !hidePawn.IsPossessed)
             {
                 hasPossesion = true;
-                _pawnController = pawnController;
-                pawnController.IsPossessed = true;
+                _hidePawn = hidePawn;
+                hidePawn.IsPossessed = true;
+            }
+            else
+            {
+                Debug.LogWarning("Invalid possession");
             }
         }
 
         public void Depossess()
         {
-            if (_pawnController != null)
+            if (_hidePawn != null)
             {
                 hasPossesion = false;
-                _pawnController.IsPossessed = false;
-                _pawnController = null;
+                _hidePawn.IsPossessed = false;
+                _hidePawn = null;
             }
         }
     }

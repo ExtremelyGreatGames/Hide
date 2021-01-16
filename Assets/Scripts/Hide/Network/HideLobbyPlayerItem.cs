@@ -81,7 +81,6 @@ namespace Hide.Network
 
 			//Note: This is just an example, you are free to make your own team colors and
 			// change this to however you see fit
-			Debug.Log(id);
 			if (TeamColors.Length > id && id >= 0)
 				avatarColor = AvatarColors[id];
 

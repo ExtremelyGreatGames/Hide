@@ -1,8 +1,8 @@
-﻿using BeardedManStudios.Forge.Networking;
+﻿using System;
+using BeardedManStudios.Forge.Networking;
 using BeardedManStudios.Forge.Networking.Generated;
+using Hide.System;
 using UnityEngine;
-using UnityEngine.Playables;
-using NotImplementedException = System.NotImplementedException;
 
 namespace Hide.Network
 {
@@ -11,21 +11,35 @@ namespace Hide.Network
     /// </summary>
     public class HidePlayer : PlayerBehavior
     {
+        public GameObject playerControllerPrefab;
         
-        
+        private GameLogic _gameLogic;
+        private ExternalInput _externalInput;
+        private HidePawn _pawnBody;
+
         protected override void NetworkStart()
         {
             base.NetworkStart();
             
-            // If this networkObject is actually the **enemy** Player
+            // If this networkObject is actually the **enemy** Player   
             // hence not the one we will control and own
             if (networkObject.IsOwner)
             {
-                // todo: create a controller
-                // todo: request server who am i
-                
-                // Debug.Log($"{networkObject.NetworkId} = {}");
+                _externalInput = Instantiate(playerControllerPrefab).GetComponent<ExternalInput>();
+                _pawnBody = GetComponent<HidePawn>();
+                _externalInput.Possess(_pawnBody);
             }
+        }
+
+        private void Update()
+        {
+            if (!networkObject.IsOwner)
+            {
+                transform.position = networkObject.position;
+                return;
+            }
+
+            networkObject.position = transform.position;
         }
 
         public override void UpdateName(RpcArgs args)

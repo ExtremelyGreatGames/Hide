@@ -1,5 +1,4 @@
-﻿using System;
-using Hide.System;
+﻿using Hide.System;
 using UnityEngine;
 
 namespace Hide.LevelManager
@@ -8,12 +7,12 @@ namespace Hide.LevelManager
     {
         public ExternalInput externalInput;
         // todo: remove harcoded pawncontroller find
-        public PawnController pawnController;
+        public HidePawn hidePawn;
         
         private void Start()
         {
             // todo: find right pawn to possess
-            externalInput.Possess(pawnController);
+            externalInput.Possess(hidePawn);
         }
 
         private void OnDestroy()
