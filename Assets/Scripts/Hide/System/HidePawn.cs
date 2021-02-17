@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using BeardedManStudios.Forge.Networking.Unity;
+﻿using System.Collections.Generic;
 using Hide.Network;
 using Hide.Speech;
 using UnityEngine;

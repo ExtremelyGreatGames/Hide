@@ -1,7 +1,4 @@
-﻿using BeardedManStudios.Forge.Networking;
-using BeardedManStudios.Forge.Networking.Generated;
-using BeardedManStudios.Forge.Networking.Unity;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using NotImplementedException = System.NotImplementedException;
 
@@ -11,12 +8,13 @@ namespace Hide.Network
     /// The player data synced between each clients.
     /// Data here is not tied to the hide player so never destroy this.
     /// </summary>
-    public class GameLogic : GameLogicBehavior
+    // public class GameLogic : GameLogicBehavior
+    public class GameLogic
     {
         private HidePlayer _localPlayer;
         public static GameLogic Instance { get; private set; }
         
-        private void Awake()
+        /*private void Awake()
         {
             
             if (Instance != null)
@@ -56,6 +54,6 @@ namespace Hide.Network
             {
                 Debug.Log($"Game logic detect scene change to {scene.name}");
             }
-        }
+        }*/
     }
 }

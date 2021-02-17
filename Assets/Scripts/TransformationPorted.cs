@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TransformationPorted : MonoBehaviour
 {
+#if !UNITY_STANDALONE_LINUX
     // need sprite assets
 
     private Animator _animator;
@@ -40,4 +41,5 @@ public class TransformationPorted : MonoBehaviour
         Debug.Log(args.text);
         _animator.SetTrigger("Change" + _keywordDict[args.text]);
     }
+#endif
 }

@@ -1,10 +1,7 @@
-﻿using BeardedManStudios.Forge.Networking;
-using BeardedManStudios.Forge.Networking.Frame;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using BeardedManStudios;
 
 namespace Hide.Network
 {
@@ -12,7 +9,8 @@ namespace Hide.Network
     /// The lobby service handles all functionality of handling generic player data
     /// Modified from BeardedManStudios.Forge.Networking.Lobby
     /// </summary>
-    public class HideLobbyService : INetworkBehavior
+    // public class HideLobbyService : INetworkBehavior
+    public class HideLobbyService
     {
         public const byte RPC_ASSIGN_NAME = 4;
         public const byte RPC_ASSIGN_AVATAR = 5;
@@ -22,6 +20,7 @@ namespace Hide.Network
         public const byte RPC_PLAYER_LEFT = 9;
         public const byte RPC_PLAYER_SYNC = 10;
 
+        /*
         #region Private Data
 
         private LobbyServiceNetworkObject networkObject = null;
@@ -724,6 +723,6 @@ namespace Hide.Network
             networkObject.SendRpc(RPC_PLAYER_LEFT, Receivers.All, player.NetworkId);
         }
 
-        #endregion
+        #endregion*/
     }
 }

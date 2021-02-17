@@ -1,7 +1,4 @@
-﻿using System;
-using BeardedManStudios.Forge.Networking;
-using BeardedManStudios.Forge.Networking.Generated;
-using Hide.System;
+﻿using Hide.System;
 using UnityEngine;
 
 namespace Hide.Network
@@ -9,7 +6,8 @@ namespace Hide.Network
     /// <summary>
     /// The player character with data synced between each clients
     /// </summary>
-    public class HidePlayer : PlayerBehavior
+    // public class HidePlayer : PlayerBehavior
+    public class HidePlayer : MonoBehaviour
     {
         public GameObject playerControllerPrefab;
         
@@ -17,6 +15,7 @@ namespace Hide.Network
         private ExternalInput _externalInput;
         private HidePawn _pawnBody;
 
+        /*
         protected override void NetworkStart()
         {
             base.NetworkStart();
@@ -47,6 +46,6 @@ namespace Hide.Network
             // ignore the method name for now
             // todo: check player info then send back who they are via RPC
             networkObject.SendRpc(args.Info.SendingPlayer, RPC_UPDATE_NAME, "");
-        }
+        }*/
     }
 }

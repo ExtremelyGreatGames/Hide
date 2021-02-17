@@ -3,16 +3,14 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using BeardedManStudios.Forge.Networking;
-using BeardedManStudios.Forge.Networking.Unity;
-using BeardedManStudios.Forge.Networking.Frame;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 using Text = UnityEngine.UI.Text;
 
 namespace Hide.Network
 {
-    public class HideLobbyManager : MonoBehaviour, IHideLobbyMaster
+    // public class HideLobbyManager : MonoBehaviour, IHideLobbyMaster
+    public class HideLobbyManager : MonoBehaviour
     {
         public GameObject PlayerItem;
         public HideLobbyPlayerItem Myself;
@@ -25,6 +23,7 @@ namespace Hide.Network
         private List<HideLobbyPlayerItem> _lobbyPlayersPool = new List<HideLobbyPlayerItem>();
         private HideLobbyPlayer _myself;
         
+        /*
         private NetworkObject _networkObjectReference;
 
         #region Interface Members
@@ -481,6 +480,6 @@ namespace Hide.Network
             }
         }
 
-        #endregion
+        #endregion*/
     }
 }

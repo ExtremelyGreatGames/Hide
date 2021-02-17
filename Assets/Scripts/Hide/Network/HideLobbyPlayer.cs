@@ -1,6 +1,4 @@
-﻿using BeardedManStudios.Forge.Networking;
-
-namespace Hide.Network
+﻿namespace Hide.Network
 {
     public class HideLobbyPlayer : IClientHidePlayer
     {

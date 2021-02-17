@@ -24,6 +24,7 @@ namespace Hide.Speech
     /// </remarks>
     public class SpeechRecognizer : MonoBehaviour
     {
+#if !UNITY_STANDALONE_LINUX
         [Tooltip("Assign a function to this to know when you can put keywords and start listening.")]
         public UnityEvent onPreparedEvent;
 
@@ -111,5 +112,6 @@ namespace Hide.Speech
         {
             /* empty */
         }
+#endif
     }
 }

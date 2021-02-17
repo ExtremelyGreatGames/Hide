@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Text;
-using MLAPI;
-using MLAPI.SceneManagement;
-using MLAPI.Transports.Tasks;
-using MLAPI.Transports.UNET;
 using RoboRyanTron.Unite2017.Events;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,14 +10,14 @@ namespace Hide.Network
     /// Handles all the players connected, from lobby to game scene
     /// </summary>
     /// Note: 
-    [RequireComponent(typeof(NetworkingManager))]
+    // [RequireComponent(typeof(NetworkingManager))]
     public class GameNetwork : MonoBehaviour
     {
         public GameEvent onClientConnectedEvent;
         public GameEvent onClientDisconnectedEvent;
         
-        private UserType _userType;
-        private static GameNetwork _gameNetwork = null;
+        // private UserType _userType;
+        private static GameNetwork _gameNetwork = null;/*
         private NetworkingManager _networkingManager;
         private SocketTasks _socketTasks;
         private UnetTransport _unetTransport;
@@ -98,7 +94,7 @@ namespace Hide.Network
 
             // The prefab hash. Use null to use the default player prefab
             // If using this hash, replace "MyPrefabGenerator" with the name of a prefab
-            // added to the NetworkPrefabs field of your NetworkingManager object in the scene. */
+            // added to the NetworkPrefabs field of your NetworkingManager object in the scene. #1#
             // ulong? prefabHash = SpawnManager.GetPrefabHashFromGenerator("MyPrefabHashGenerator");
             
             // If approve is true, the connection gets added.
@@ -174,6 +170,6 @@ namespace Hide.Network
 
         public void StartGame()
         {
-        }
+        }*/
     }
 }

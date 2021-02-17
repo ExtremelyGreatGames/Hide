@@ -14,15 +14,18 @@ namespace Hide.System
     [RequireComponent(typeof(SpeechRecognizer))]
     public class ExternalInput : MonoBehaviour
     {
-        public SoundPairs[] soundPairsArray = {
-            new SoundPairs { sound = "moo", animal = "Cow" },
-            new SoundPairs { sound = "oink", animal = "Pig" },
-            new SoundPairs { sound = "cluck", animal = "Chicken" },
+        public SoundPairs[] soundPairsArray =
+        {
+            new SoundPairs {sound = "moo", animal = "Cow"},
+            new SoundPairs {sound = "oink", animal = "Pig"},
+            new SoundPairs {sound = "cluck", animal = "Chicken"},
         };
 
         private Inputs controls;
         private SpeechRecognizer _speechRecognizer;
+
         private KeywordHandler _keywordHandler;
+
         /* We need hasPossession because doing null checks are slow */
         private bool hasPossesion = false;
         private HidePawn _hidePawn;
@@ -40,7 +43,7 @@ namespace Hide.System
             {
                 if (hasPossesion)
                 {
-                    _hidePawn.move = ctx.ReadValue<Vector2>();   
+                    _hidePawn.move = ctx.ReadValue<Vector2>();
                 }
             };
             controls.Hider.Movement.canceled += ctx =>
@@ -55,10 +58,12 @@ namespace Hide.System
             controls.Hider.Speak.canceled += ctx => OnSpeakReleased();
 
             controls.Hider.Ability.performed += ctx => OnAbilityPressed();
-            
+
+#if !UNITY_STANDALONE_LINUX
             _speechRecognizer = GetComponent<SpeechRecognizer>();
             _speechRecognizer.onPreparedEvent.AddListener(OnSpeechRecognizerPrepared);
             _speechRecognizer.onSpeechRecognizedEvent.AddListener(SpeechRecognized);
+#endif // UNITY_STANDALONE_LINUX
         }
 
         void OnEnable()
@@ -87,6 +92,7 @@ namespace Hide.System
 
         public void OnSpeechRecognizerPrepared()
         {
+#if !UNITY_STANDALONE_LINUX
             foreach (var pair in soundPairsArray)
             {
                 _keywordDict[pair.sound] = pair.animal;
@@ -100,6 +106,7 @@ namespace Hide.System
 #if UNITY_ANDROID
         _speechRecognizer.StartListening();
 #endif // UNITY_ANDROID
+#endif // UNITY_STANDALONE_LINUX
         }
 
         void OnAbilityPressed()

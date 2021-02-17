@@ -24,6 +24,7 @@ namespace Hide.Network
 		public HideLobbyPlayer AssociatedPlayer { get; private set; }
 		private HideLobbyManager _manager;
 
+		/*
 		public void Init(HideLobbyManager manager)
 		{
 			ThisGameObject = gameObject;
@@ -111,6 +112,6 @@ namespace Hide.Network
 		public void ToggleObject(bool value)
 		{
 			ThisGameObject.SetActive(value);
-		}
+		}*/
 	}
 }

@@ -1,10 +1,6 @@
-﻿using BeardedManStudios.Forge.Networking;
-using BeardedManStudios.Forge.Networking.Generated;
-using MLAPI;
-
-namespace Hide.Network
+﻿namespace Hide.Network
 {
-    public partial class HidePlayerObject : PlayerNetworkObject
+    /*public partial class HidePlayerObject : PlayerNetworkObject
     {
         protected override bool ServerAllowRpc(byte methodId, Receivers receivers, RpcArgs args)
         {
@@ -20,5 +16,5 @@ namespace Hide.Network
 
             return true;
         }
-    }
+    }*/
 }
