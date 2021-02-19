@@ -24,5 +24,10 @@ namespace Hide.Network
             // todo: this is where we decide if you're a wolf or not
             return base.OnRoomServerCreateGamePlayer(conn, roomPlayer);
         }
+
+        public override void OnGUI()
+        {
+            // don't do anything!!
+        }
     }
 }

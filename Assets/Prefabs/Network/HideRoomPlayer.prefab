@@ -152,6 +152,7 @@ MonoBehaviour:
   showRoomGUI: 1
   readyToBegin: 0
   index: 0
+  lobbyData: {fileID: 11400000, guid: 05c43d146105a574dbd63f85bd9130b7, type: 2}
 --- !u!114 &6316615519371348984
 MonoBehaviour:
   m_ObjectHideFlags: 0

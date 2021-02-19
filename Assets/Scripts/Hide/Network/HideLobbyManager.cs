@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Hide.ScriptableObjects;
+using Mirror;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 using Text = UnityEngine.UI.Text;
@@ -12,7 +14,24 @@ namespace Hide.Network
     // public class HideLobbyManager : MonoBehaviour, IHideLobbyMaster
     public class HideLobbyManager : MonoBehaviour
     {
-        public GameObject PlayerItem;
+        public LobbyData lobbyData;
+        
+        public Button startGameButton;
+
+        private void Awake()
+        {
+            Debug.Assert(startGameButton != null);
+            Debug.Assert(lobbyData != null);
+
+            lobbyData.startButton = startGameButton;
+        }
+
+        private void OnDestroy()
+        {
+            lobbyData.startButton = null;
+        }
+
+        /*public GameObject PlayerItem;
         public HideLobbyPlayerItem Myself;
         public InputField ChatInputBox;
         public Text Chatbox;
@@ -21,8 +40,8 @@ namespace Hide.Network
         private const int BUFFER_PLAYER_ITEMS = 10;
         private List<HideLobbyPlayerItem> _lobbyPlayersInactive = new List<HideLobbyPlayerItem>();
         private List<HideLobbyPlayerItem> _lobbyPlayersPool = new List<HideLobbyPlayerItem>();
-        private HideLobbyPlayer _myself;
-        
+        private HideLobbyPlayer _myself;*/
+
         /*
         private NetworkObject _networkObjectReference;
 
