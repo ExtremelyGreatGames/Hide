@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hide.ScriptableObjects;
 using Hide.Speech;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ namespace Hide.System
     [RequireComponent(typeof(SpeechRecognizer))]
     public class ExternalInput : MonoBehaviour
     {
+        public GameSceneData gameSceneData;
+        
         public SoundPairs[] soundPairsArray =
         {
             new SoundPairs {sound = "moo", animal = "Cow"},
@@ -46,6 +49,7 @@ namespace Hide.System
                     _hidePawn.move = ctx.ReadValue<Vector2>();
                 }
             };
+            
             controls.Hider.Movement.canceled += ctx =>
             {
                 if (hasPossesion)
@@ -69,11 +73,15 @@ namespace Hide.System
         void OnEnable()
         {
             controls?.Hider.Enable();
+            
+            Debug.Assert(gameSceneData != null);
+            gameSceneData.externalInput = this;
         }
 
         void OnDisable()
         {
             controls?.Hider.Disable();
+            gameSceneData.externalInput = null; //  clean up
         }
 
         void OnSpeakPressed()

@@ -15,10 +15,5 @@ namespace Hide.Network
             
             lobbyData.startButton.onClick.AddListener(() => CmdChangeReadyState(!readyToBegin));
         }
-
-        public override void OnGUI()
-        {
-            // don't do anything
-        }
     }
 }

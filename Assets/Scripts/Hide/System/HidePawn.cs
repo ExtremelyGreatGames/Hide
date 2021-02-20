@@ -25,8 +25,8 @@ namespace Hide.System
 
         public void SpeechRecognized(HidePhraseRecognitionArgs args, Dictionary<string, string> keywordDict)
         {
-            _animator.SetTrigger("Change" + keywordDict[args.text]);
-            Debug.Log("speech was recognized from: " + gameObject.name);   
+            // _animator.SetTrigger("Change" + keywordDict[args.text]);
+            Debug.Log($"speech was recognized from {gameObject.name}: {args.text}");   
         }
     }
 }

@@ -15,19 +15,24 @@ namespace Hide.Network
     public class HideNetworkManager : NetworkRoomManagerExt
     {
         [Header("Hide properties")] 
-        
+        public bool debugOnLocal = true;
         public GameObject hiderPrefab;
         public GameObject wolfPrefab;
-        
-        public override GameObject OnRoomServerCreateGamePlayer(NetworkConnection conn, GameObject roomPlayer)
+
+        public override void Awake()
         {
-            // todo: this is where we decide if you're a wolf or not
-            return base.OnRoomServerCreateGamePlayer(conn, roomPlayer);
+            base.Awake();
+
+            if (debugOnLocal)
+            {
+                networkAddress = "localhost";
+            }
         }
 
-        public override void OnGUI()
+        public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnection conn, GameObject roomPlayer, GameObject gamePlayer)
         {
-            // don't do anything!!
+            Destroy(roomPlayer);
+            return true;
         }
     }
 }

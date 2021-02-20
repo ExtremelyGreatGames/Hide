@@ -1,4 +1,7 @@
-﻿using Hide.System;
+﻿using System;
+using Hide.ScriptableObjects;
+using Hide.System;
+using Mirror;
 using UnityEngine;
 
 namespace Hide.Network
@@ -7,13 +10,30 @@ namespace Hide.Network
     /// The player character with data synced between each clients
     /// </summary>
     // public class HidePlayer : PlayerBehavior
-    public class HidePlayer : MonoBehaviour
+    public class HidePlayer : NetworkBehaviour
     {
+        public GameSceneData gameSceneData;
         public GameObject playerControllerPrefab;
         
         private GameLogic _gameLogic;
         private ExternalInput _externalInput;
         private HidePawn _pawnBody;
+
+        private void Start()
+        {
+            Debug.Assert(gameSceneData != null);
+        }
+
+        public override void OnStartLocalPlayer()
+        {
+            base.OnStartLocalPlayer();
+        
+            _externalInput = gameSceneData.externalInput;
+            _pawnBody = GetComponent<HidePawn>();
+            _externalInput.Possess(_pawnBody);
+        
+            // todo: tell camera to follow me
+        }
 
         /*
         protected override void NetworkStart()
