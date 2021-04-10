@@ -58,3 +58,7 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Ignore Mirror package
+/Assets/Mirror/*
+/Assets/Mirror.meta
+
