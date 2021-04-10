@@ -30,11 +30,13 @@ public class KeywordHandler : MonoBehaviour
     public void StartSpeechRecognizer() 
     {
         keywordRecognizer.Start();
+        Debug.Log("Start speech recognizer");
     }
 
     public void StopSpeechRecognizer() 
     {
         keywordRecognizer.Stop();
+        Debug.Log("Stop speech recognizer");
     }
 
     private void OnPhraseRecognized(PhraseRecognizedEventArgs args) 

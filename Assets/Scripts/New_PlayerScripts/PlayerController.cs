@@ -7,7 +7,7 @@ public class PlayerController : NetworkBehaviour
 {
     // Object References
     InputHandler inputHandler;
-    SpriteRenderer spriteRenderer;
+    Animator animator;
 
     Vector2 moveVals;
 
@@ -16,12 +16,16 @@ public class PlayerController : NetworkBehaviour
     private void Start()
     {
         inputHandler = gameObject.GetComponent<InputHandler>();
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        animator = gameObject.GetComponent<Animator>();
     }
 
     private void Update()
     {
+        if (!hasAuthority) { return; }
+
         moveVals = inputHandler.GetMoveVals();
+        animator.SetFloat("MoveX", moveVals.x);
+        animator.SetFloat("MoveY", moveVals.y);
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             Debug.Log("Forced transform");
@@ -31,38 +35,48 @@ public class PlayerController : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (isServer) {
-            return;
-        }
-
+        if (!hasAuthority) { return; }
         transform.Translate(moveVals.normalized * moveSpeed * Time.deltaTime);
     }
 
+    [Client]
     public void OnSpeechRecognized(string animalKey) 
     {
-        Debug.Log(animalKey);
+        if (!hasAuthority) { return; }
 
-        // switch on animal key, change sprite
-        switch (animalKey)
-        {
-            case "cow":
-                spriteRenderer.color = Color.red;
-                break;
-            case "pig":
-                spriteRenderer.color = Color.blue;
-                break;
-            case "chicken":
-                spriteRenderer.color = Color.green;
-                break;
-            default:
-                //spriteRenderer.color = Color.white;
-                break;
-        }
+        //Debug.Log(animalKey);
+        CmdChangeAnimal(animalKey);
+    }
+
+    [Command]
+    private void CmdChangeAnimal(string animalKey) 
+    {
+        RpcChangeAnimal(animalKey);
     }
 
     // RPC? maybe need to pass player identity? Maybe RPC the OnSpeechRecognized?
-    private void ChangeSprite()
-    { 
-        
+    [ClientRpc]
+    private void RpcChangeAnimal(string animalKey)
+    {
+        switch (animalKey)
+        {
+            case "cow":
+                animator.SetTrigger("TriggerCow");
+                animator.ResetTrigger("TriggerChicken");
+                animator.ResetTrigger("TriggerPig");
+                break;
+            case "pig":
+                animator.ResetTrigger("TriggerCow");
+                animator.ResetTrigger("TriggerChicken");
+                animator.SetTrigger("TriggerPig");
+                break;
+            case "chicken":
+                animator.ResetTrigger("TriggerCow");
+                animator.SetTrigger("TriggerChicken");
+                animator.ResetTrigger("TriggerPig");
+                break;
+            default:
+                break;
+        }
     }
 }
