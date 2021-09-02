@@ -12,7 +12,7 @@ public class TransformationPorted : MonoBehaviour
 
     private readonly Dictionary<string, string> _keywordDict = new Dictionary<string, string>
     {
-        {"testing", "Cow"}, {"oink", "Pig"}, {"one", "Chicken"}
+        {"moo", "Cow"}, {"oink", "Pig"}, {"cluck", "Chicken"}, {"testing", "Cow"}
     };
 
     public void OnSpeechRecognizerPrepared()
@@ -22,7 +22,12 @@ public class TransformationPorted : MonoBehaviour
         _speechRecognizer.SetKeyword(_keywordDict.Keys.ToArray());
         // keywordRecognizer.OnPhraseRecognized += speechRecognized; is assigned through editor
         // no buttons in Android too lazy too configure
+        
+        // todo(turnipxenon): delete
+        _speechRecognizer.StartListening();
+
 #if UNITY_ANDROID
+        // todo(turnipxenon): uncomment
         _speechRecognizer.StartListening();
 #endif // UNITY_ANDROID
     }
