@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Mirror;
-using UnityEngine.Networking;
 
 public class PlayerMovement : NetworkBehaviour
 {
@@ -37,8 +34,8 @@ public class PlayerMovement : NetworkBehaviour
 
     [Client]
     void Update() {
-        if (!isLocalPlayer) return;
-
-        transform.Translate(_move * Time.deltaTime * moveSpeed);
+        // if (!isLocalPlayer) return;
+        //
+        // transform.Translate(_move * Time.deltaTime * moveSpeed);
     }
 }
