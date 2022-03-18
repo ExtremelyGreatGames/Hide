@@ -1,4 +1,5 @@
-﻿using BeardedManStudios.Forge.Networking;
+﻿#if false
+using BeardedManStudios.Forge.Networking;
 using BeardedManStudios.Forge.Networking.Frame;
 using System;
 using System.Collections;
@@ -727,3 +728,4 @@ namespace Hide.Network
         #endregion
     }
 }
+#endif

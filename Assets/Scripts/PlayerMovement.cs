@@ -34,8 +34,8 @@ public class PlayerMovement : NetworkBehaviour
 
     [Client]
     void Update() {
-        // if (!isLocalPlayer) return;
-        //
-        // transform.Translate(_move * Time.deltaTime * moveSpeed);
+        if (!isLocalPlayer) return;
+        
+        transform.Translate(_move * Time.deltaTime * moveSpeed);
     }
 }

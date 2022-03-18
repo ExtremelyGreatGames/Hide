@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if false
+using System;
 using BeardedManStudios.Forge.Networking;
 using BeardedManStudios.Forge.Networking.Generated;
 using Hide.System;
@@ -50,3 +51,4 @@ namespace Hide.Network
         }
     }
 }
+#endif

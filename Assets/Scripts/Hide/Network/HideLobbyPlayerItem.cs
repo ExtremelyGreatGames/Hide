@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if false
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Hide.Network
@@ -114,3 +115,4 @@ namespace Hide.Network
 		}
 	}
 }
+#endif

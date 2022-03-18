@@ -1,4 +1,5 @@
-﻿using BeardedManStudios.Forge.Networking;
+﻿#if false
+using BeardedManStudios.Forge.Networking;
 
 namespace Hide.Network
 {
@@ -61,3 +62,4 @@ namespace Hide.Network
         }
     }
 }
+#endif

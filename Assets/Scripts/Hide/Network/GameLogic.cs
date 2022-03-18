@@ -1,4 +1,5 @@
-﻿using BeardedManStudios.Forge.Networking;
+﻿#if false
+using BeardedManStudios.Forge.Networking;
 using BeardedManStudios.Forge.Networking.Generated;
 using BeardedManStudios.Forge.Networking.Unity;
 using UnityEngine;
@@ -59,3 +60,4 @@ namespace Hide.Network
         }
     }
 }
+#endif

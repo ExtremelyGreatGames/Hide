@@ -1,4 +1,5 @@
-﻿using BeardedManStudios.Forge.Networking;
+﻿#if false
+using BeardedManStudios.Forge.Networking;
 using BeardedManStudios.Forge.Networking.Generated;
 using MLAPI;
 
@@ -22,3 +23,4 @@ namespace Hide.Network
         }
     }
 }
+#endif
