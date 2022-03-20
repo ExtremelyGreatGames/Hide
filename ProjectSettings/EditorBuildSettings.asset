@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/AllanTests/PortingScene.unity
-    guid: 9300a3575a5ebdc449e031a03c8ae69e
+    path: Assets/Scenes/AllanTests/CynaraFrameTest.unity
+    guid: 2ee8ef23b3c5c5a42ae2fe4d50ce9093
   m_configObjects: {}

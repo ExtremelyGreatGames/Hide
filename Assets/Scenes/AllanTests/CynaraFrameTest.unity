@@ -34004,6 +34004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 300
   shouldAnimateFull: 1
+  matchSpeed: 1
   text: {fileID: 1194221869}
   animatorControllerList:
   - name: Cow
@@ -34371,7 +34372,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 686.5, y: 300.2}
+  m_SizeDelta: {x: 686.5, y: 479.61}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1508098406
 MonoBehaviour:
@@ -34472,8 +34473,10 @@ MonoBehaviour:
 
     Press 2 to change animation type
 
-    Move using
-    WASD or arrow keys'
+    Press
+    3 to toggle half frame speed
+
+    Move using WASD or arrow keys'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

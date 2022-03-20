@@ -15,6 +15,7 @@ namespace Hide.Test {
   public class AnimationTestMovement : MonoBehaviour {
     public float speed = 1f;
     public bool shouldAnimateFull = true;
+    public bool matchSpeed = true;
     public TextMeshProUGUI text;
     public List<AnimatorDetails> animatorControllerList;
 
@@ -22,11 +23,12 @@ namespace Hide.Test {
     private Vector3 _move;
     private Rigidbody2D _rigidbody;
     private Animator _animator;
-    private int controllerIndex = 0;
-    private float lastX = 0;
+    private int _controllerIndex = 0;
+    private float _lastX = 0;
 
-    private int ANIM_MOVE_X = Animator.StringToHash("MoveX");
-    private int ANIM_FULL_MOTION = Animator.StringToHash("FullMotion");
+    private readonly int _animMoveX = Animator.StringToHash("MoveX");
+    private readonly int _animFullMotion = Animator.StringToHash("FullMotion");
+    private readonly int _animMatchSpeed = Animator.StringToHash("MatchSpeed");
 
     private void Awake() {
       _rigidbody = GetComponent<Rigidbody2D>();
@@ -35,7 +37,7 @@ namespace Hide.Test {
       Debug.Assert(animatorControllerList.Count > 0, "There should be at least one animator controller in animatorControllerList");
       Debug.Assert(text != null, "Text should be set for displaying details");
 
-      _animator.runtimeAnimatorController = animatorControllerList[controllerIndex].controller;
+      _animator.runtimeAnimatorController = animatorControllerList[_controllerIndex].controller;
     }
 
     private void OnEnable() {
@@ -44,6 +46,7 @@ namespace Hide.Test {
       _playerInput.currentActionMap["Move"].canceled += PlayerOnMove;
       _playerInput.currentActionMap["ToggleAnimation"].performed += ToggleAnimation;
       _playerInput.currentActionMap["Transform"].performed += Transform;
+      _playerInput.currentActionMap["ToggleMatchSpeed"].performed += ToggleMatchSpeed;
     }
 
     private void Start() {
@@ -58,15 +61,16 @@ namespace Hide.Test {
 
     private void ToggleAnimation(InputAction.CallbackContext context) {
       shouldAnimateFull = !shouldAnimateFull;
-      _animator.SetBool(ANIM_FULL_MOTION, shouldAnimateFull);
       DisplayInformation();
     }
 
     private void Transform(InputAction.CallbackContext context) {
-      controllerIndex = (controllerIndex + 1)%animatorControllerList.Count;
-      _animator.runtimeAnimatorController = animatorControllerList[controllerIndex].controller;
-      _animator.SetBool(ANIM_FULL_MOTION, shouldAnimateFull);
-      _animator.SetFloat(ANIM_MOVE_X, lastX);
+      _controllerIndex = (_controllerIndex + 1)%animatorControllerList.Count;
+      _animator.runtimeAnimatorController = animatorControllerList[_controllerIndex].controller;
+      DisplayInformation();
+    }
+    private void ToggleMatchSpeed(InputAction.CallbackContext context) {
+      matchSpeed = !matchSpeed;
       DisplayInformation();
     }
 
@@ -74,8 +78,8 @@ namespace Hide.Test {
       _rigidbody.velocity = _move*(speed*Time.fixedDeltaTime);
 
       if (Mathf.Abs(_rigidbody.velocity.x) > 0.01f) {
-        lastX = _rigidbody.velocity.x;
-        _animator.SetFloat(ANIM_MOVE_X, lastX);
+        _lastX = _rigidbody.velocity.x;
+        _animator.SetFloat(_animMoveX, _lastX);
       }
     }
 
@@ -83,8 +87,18 @@ namespace Hide.Test {
       return shouldAnimateFull ? "Frame cycle: 8" : "Frame cycle: 4";
     }
 
+    private static string YesOrNo(bool b) {
+      return b ? "Yes" : "No";
+    }
+
     private void DisplayInformation() {
-      text.text = $"===\nCurrent animal: {animatorControllerList[controllerIndex].name}\n{CurrentFrameRate()}";
+      _animator.SetBool(_animFullMotion, shouldAnimateFull);
+      _animator.SetFloat(_animMoveX, _lastX);
+      _animator.SetFloat(_animMatchSpeed, matchSpeed ? 1f : 2f);
+      text.text = "===" +
+                  $"\nCurrent animal: {animatorControllerList[_controllerIndex].name}" +
+                  $"\n{CurrentFrameRate()}" +
+                  $"\nHalf frame match speed? {YesOrNo(matchSpeed)}";
     }
   }
 
