@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.InputSystem;
-using UnityEngine.PlayerLoop;
 
 namespace Hide.Test {
   [RequireComponent(typeof(PlayerInput))]
@@ -105,6 +102,6 @@ namespace Hide.Test {
   [Serializable]
   public class AnimatorDetails {
     public string name;
-    public AnimatorController controller;
+    public RuntimeAnimatorController controller;
   }
 }
