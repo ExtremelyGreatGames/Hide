@@ -11,7 +11,8 @@
                     "id": "c15792fb-b2e4-4a74-b750-6a420e71ef70",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Look",
@@ -19,7 +20,8 @@
                     "id": "5f0d6095-9a0c-457e-b5ba-dcc4ca3092c4",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Interact",
@@ -27,7 +29,8 @@
                     "id": "c08081df-6622-4007-bedf-0198253825db",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Speak",
@@ -35,7 +38,26 @@
                     "id": "c7c32529-22c8-4f46-a601-c3f65737d37a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Transform",
+                    "type": "Button",
+                    "id": "0ad077f0-cf30-4279-b74e-4a18f057ea04",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleAnimation",
+                    "type": "Button",
+                    "id": "ccaace7d-a4e3-4908-a1bb-613f381aace0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -280,6 +302,28 @@
                     "action": "Speak",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8bc14fe7-8a65-4853-91de-00c7897f526f",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Transform",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc264506-1f18-4c91-b9c5-71c6259206b6",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleAnimation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -293,7 +337,8 @@
                     "id": "d40ed334-bff4-4111-827e-ba245c4c303a",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Submit",
@@ -301,7 +346,8 @@
                     "id": "8d1c24db-bc11-40a7-ac59-bca4725539df",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Cancel",
@@ -309,7 +355,8 @@
                     "id": "cf210872-8820-4b2b-b42a-1f75e27a7a27",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Point",
@@ -317,7 +364,8 @@
                     "id": "d9b47e24-ebb7-4474-a64b-b0c4ac7d6323",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Click",
@@ -325,7 +373,8 @@
                     "id": "6aea6cf7-4bc5-4b12-bd0b-47ac0b38e49f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "ScrollWheel",
@@ -333,7 +382,8 @@
                     "id": "bb89c547-d16d-43dc-89bd-62a5ddd1e853",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "MiddleClick",
@@ -341,7 +391,8 @@
                     "id": "63e3ca72-b34d-486c-95f2-6773594f4569",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "RightClick",
@@ -349,7 +400,8 @@
                     "id": "2dd42bad-d01d-4e90-80a3-bdb098f8bff8",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "TrackedDevicePosition",
@@ -357,7 +409,8 @@
                     "id": "5441c37a-12b8-421f-ac88-afb159580f39",
                     "expectedControlType": "Vector3",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "TrackedDeviceOrientation",
@@ -365,7 +418,8 @@
                     "id": "d1c3d89a-d4a1-4bf1-924c-88d8df3401d6",
                     "expectedControlType": "Quaternion",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
