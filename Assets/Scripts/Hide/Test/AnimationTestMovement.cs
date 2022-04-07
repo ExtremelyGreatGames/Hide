@@ -80,7 +80,8 @@ namespace Hide.Test
             _isMoving = Mathf.Abs(_move.x) > 0.01f;
             if (_isMoving)
             {
-                _animator.SetFloat(_animMoveX, _move.x * (_isRunning ? 5f : 1f));
+                _lastX = _move.x * (_isRunning ? 5f : 1f);
+                _animator.SetFloat(_animMoveX, _lastX);
             }
 
             _animator.SetBool(_animIsMoving, _isMoving);
@@ -88,6 +89,7 @@ namespace Hide.Test
 
         private void DisplayInformation()
         {
+            _animator.SetBool(_animIsMoving, _isMoving);
             _animator.SetFloat(_animMoveX, _lastX);
             text.text = "===" +
                         $"\nCurrent animal: {animatorControllerList[_controllerIndex].name}";
