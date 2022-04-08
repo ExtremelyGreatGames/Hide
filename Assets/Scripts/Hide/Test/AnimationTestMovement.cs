@@ -23,12 +23,15 @@ namespace Hide.Test
         private Rigidbody2D _rigidbody;
         private Animator _animator;
         private Vector3 _move;
-        private int _controllerIndex = 0;
-        private float _lastX = 0;
-        private bool _isMoving = false;
-        private bool _isRunning = false;
+        private int _controllerIndex;
+        private float _lastX;
+        private float _lastY;
+        private bool _isAnimMoving;
+        private bool _isControlMoving;
+        private bool _isRunning;
 
         private readonly int _animMoveX = Animator.StringToHash("MoveX");
+        private readonly int _animMoveY = Animator.StringToHash("MoveY");
         private readonly int _animIsMoving = Animator.StringToHash("IsMoving");
 
         private void Awake()
@@ -46,9 +49,10 @@ namespace Hide.Test
         private void OnEnable()
         {
             _playerInput = GetComponent<PlayerInput>();
+            _playerInput.currentActionMap["Move"].started += PlayerOnMove;
             _playerInput.currentActionMap["Move"].performed += PlayerOnMove;
             _playerInput.currentActionMap["Move"].canceled += PlayerOnMove;
-            _playerInput.currentActionMap["Transform"].performed += Transform;
+            _playerInput.currentActionMap["Transform"].canceled += Transform;
             _playerInput.currentActionMap["Run"].started += delegate { _isRunning = true; };
             _playerInput.currentActionMap["Run"].canceled += delegate { _isRunning = false; };
         }
@@ -63,6 +67,16 @@ namespace Hide.Test
         private void PlayerOnMove(InputAction.CallbackContext context)
         {
             _move = context.ReadValue<Vector2>();
+            if (context.started)
+            {
+                _isAnimMoving = true; // for transform
+                _animator.SetBool(_animIsMoving, _isAnimMoving);
+            }
+            else if (context.canceled)
+            {
+                _isAnimMoving = false; // for transform
+                _animator.SetBool(_animIsMoving, _isAnimMoving);
+            }
         }
 
         private void Transform(InputAction.CallbackContext context)
@@ -74,23 +88,32 @@ namespace Hide.Test
 
         private void FixedUpdate()
         {
+            // physics
             _rigidbody.velocity =
                 _move * (speed * Time.fixedDeltaTime * (_isRunning ? runSpeedMultiplier : walkSpeedMultiplier));
+        }
 
-            _isMoving = Mathf.Abs(_move.x) > 0.01f;
-            if (_isMoving)
+        private void Update()
+        {
+            // animations
+            // this order is essential
+            // todo(TurnipXenon): document
+            if (_move.sqrMagnitude > 0.1f)
             {
+                _lastY = _move.y * (_isRunning ? 5f : 1f);
                 _lastX = _move.x * (_isRunning ? 5f : 1f);
-                _animator.SetFloat(_animMoveX, _lastX);
             }
 
-            _animator.SetBool(_animIsMoving, _isMoving);
+            _isAnimMoving = Mathf.Abs(_move.x) > 0.01f;
+            _animator.SetFloat(_animMoveY, _lastY);
+            _animator.SetFloat(_animMoveX, _lastX);
         }
 
         private void DisplayInformation()
         {
-            _animator.SetBool(_animIsMoving, _isMoving);
+            _animator.SetBool(_animIsMoving, _isAnimMoving);
             _animator.SetFloat(_animMoveX, _lastX);
+            _animator.SetFloat(_animMoveY, _lastY);
             text.text = "===" +
                         $"\nCurrent animal: {animatorControllerList[_controllerIndex].name}";
         }
