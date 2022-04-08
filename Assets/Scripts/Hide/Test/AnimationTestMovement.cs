@@ -94,7 +94,7 @@ namespace Hide.Test
                 _lastX = _move.x * (_isRunning ? 5f : 1f);
             }
 
-            _isAnimMoving = Mathf.Abs(_lastX) > 0.01f;
+            _isAnimMoving = Mathf.Abs(_move.x) > 0.01f;
             _animator.SetFloat(_animMoveY, _lastY);
             _animator.SetFloat(_animMoveX, _lastX);
             _animator.SetBool(_animIsMoving, _isAnimMoving);
