@@ -17,7 +17,6 @@ namespace Hide.Test
         public float runSpeedMultiplier = 3f;
         public TextMeshProUGUI text;
         public List<AnimatorDetails> animatorControllerList;
-        public float moveMagnitude = 6f;
 
         private PlayerInput _playerInput;
         private Rigidbody2D _rigidbody;
@@ -26,13 +25,10 @@ namespace Hide.Test
         private int _controllerIndex;
         private float _lastX;
         private float _lastY;
-        private bool _isAnimMoving;
-        private bool _isControlMoving;
         private bool _isRunning;
 
         private readonly int _animMoveX = Animator.StringToHash("MoveX");
         private readonly int _animMoveY = Animator.StringToHash("MoveY");
-        private readonly int _animIsMoving = Animator.StringToHash("IsMoving");
         private const float EPSILON = 0.001f;
         private const float SMALL_VALUE = 0.1f;
 
@@ -48,7 +44,7 @@ namespace Hide.Test
             Debug.Assert(text != null, "Text should be set for displaying details");
 
             _animator.runtimeAnimatorController = animatorControllerList[_controllerIndex].controller;
-            
+
             _playerInput = GetComponent<PlayerInput>();
             moveAction = _playerInput.currentActionMap["Move"];
             _playerInput.currentActionMap["Transform"].canceled += Transform;
@@ -90,7 +86,7 @@ namespace Hide.Test
                 // make old value smaller but not zero
                 return 0f;
             }
-            
+
             if (!isMoving)
             {
                 return newValue > 0f ? SMALL_VALUE : -SMALL_VALUE;
@@ -127,7 +123,6 @@ namespace Hide.Test
 
         private void DisplayInformation()
         {
-            _animator.SetBool(_animIsMoving, _isAnimMoving);
             _animator.SetFloat(_animMoveX, _lastX);
             _animator.SetFloat(_animMoveY, _lastY);
             text.text = "===" +
