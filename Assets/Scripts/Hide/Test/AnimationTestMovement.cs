@@ -33,6 +33,10 @@ namespace Hide.Test
         private readonly int _animMoveX = Animator.StringToHash("MoveX");
         private readonly int _animMoveY = Animator.StringToHash("MoveY");
         private readonly int _animIsMoving = Animator.StringToHash("IsMoving");
+        private const float EPSILON = 0.001f;
+        private const float SMALL_VALUE = 0.1f;
+
+        private InputAction moveAction;
 
         private void Awake()
         {
@@ -44,14 +48,9 @@ namespace Hide.Test
             Debug.Assert(text != null, "Text should be set for displaying details");
 
             _animator.runtimeAnimatorController = animatorControllerList[_controllerIndex].controller;
-        }
-
-        private void OnEnable()
-        {
+            
             _playerInput = GetComponent<PlayerInput>();
-            _playerInput.currentActionMap["Move"].started += PlayerOnMove;
-            _playerInput.currentActionMap["Move"].performed += PlayerOnMove;
-            _playerInput.currentActionMap["Move"].canceled += PlayerOnMove;
+            moveAction = _playerInput.currentActionMap["Move"];
             _playerInput.currentActionMap["Transform"].canceled += Transform;
             _playerInput.currentActionMap["Run"].started += delegate { _isRunning = true; };
             _playerInput.currentActionMap["Run"].canceled += delegate { _isRunning = false; };
@@ -62,12 +61,6 @@ namespace Hide.Test
             DisplayInformation();
         }
 
-        // Fun fact: you can't user OnMove because it's reserved for Unity but they won't tell
-        // why there's an error :D
-        private void PlayerOnMove(InputAction.CallbackContext context)
-        {
-            _move = context.ReadValue<Vector2>();
-        }
 
         private void Transform(InputAction.CallbackContext context)
         {
@@ -83,21 +76,53 @@ namespace Hide.Test
                 _move * (speed * Time.fixedDeltaTime * (_isRunning ? runSpeedMultiplier : walkSpeedMultiplier));
         }
 
+        /// <summary>
+        /// todo(TurnipXenon): document
+        /// todo(TurnipXenon): possible improvement is to use enums instead of isMoving to readability
+        /// </summary>
+        /// <param name="newValue"></param>
+        /// <param name="isMoving"></param>
+        /// <returns></returns>
+        private float NormalizeMoveForAnimation(float newValue, bool isMoving)
+        {
+            if (Mathf.Abs(newValue) < EPSILON)
+            {
+                // make old value smaller but not zero
+                return 0f;
+            }
+            
+            if (!isMoving)
+            {
+                return newValue > 0f ? SMALL_VALUE : -SMALL_VALUE;
+            }
+
+            return (newValue > 0f ? 1f : -1f)
+                   * (_isRunning ? 2f : 1f);
+        }
+
         private void Update()
         {
             // animations
             // this order is essential
             // todo(TurnipXenon): document
-            if (_move.sqrMagnitude > 0.001f)
+            _move = moveAction.ReadValue<Vector2>();
+
+            var isMoving = _move.sqrMagnitude > 0f;
+            if (isMoving)
             {
-                _lastY = _move.y * (_isRunning ? 5f : 1f);
-                _lastX = _move.x * (_isRunning ? 5f : 1f);
+                // we want to normalize normally
+                _lastY = NormalizeMoveForAnimation(_move.y, isMoving);
+                _lastX = NormalizeMoveForAnimation(_move.x, isMoving);
+            }
+            else
+            {
+                // we want to minimize the normalization to activate idle animations
+                _lastY = NormalizeMoveForAnimation(_lastY, isMoving);
+                _lastX = NormalizeMoveForAnimation(_lastX, isMoving);
             }
 
-            _isAnimMoving = Mathf.Abs(_move.x) > 0.01f;
             _animator.SetFloat(_animMoveY, _lastY);
             _animator.SetFloat(_animMoveX, _lastX);
-            _animator.SetBool(_animIsMoving, _isAnimMoving);
         }
 
         private void DisplayInformation()

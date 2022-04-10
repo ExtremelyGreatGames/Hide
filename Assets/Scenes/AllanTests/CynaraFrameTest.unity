@@ -34305,7 +34305,7 @@ Animator:
   m_GameObject: {fileID: 536235841}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d6bd383c141945d46878a97433375d42, type: 2}
+  m_Controller: {fileID: 9100000, guid: e569daea1f8e06b41a73091e1113beae, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -34382,10 +34382,10 @@ MonoBehaviour:
   runSpeedMultiplier: 1
   text: {fileID: 1194221869}
   animatorControllerList:
-  - name: Pig
-    controller: {fileID: 9100000, guid: 2a7690779e8b1c048ac01fdb0223c9af, type: 2}
   - name: Cow
     controller: {fileID: 9100000, guid: d6bd383c141945d46878a97433375d42, type: 2}
+  - name: Pig
+    controller: {fileID: 9100000, guid: 2a7690779e8b1c048ac01fdb0223c9af, type: 2}
   - name: Chicken
     controller: {fileID: 9100000, guid: e569daea1f8e06b41a73091e1113beae, type: 2}
   - name: Wolf
@@ -34404,7 +34404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 06927babe52b7544e8ca46b889d3ef6d, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -34415,7 +34415,91 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 536235845}
+        m_TargetAssemblyTypeName: Hide.Test.AnimationTestMovement, Assembly-CSharp
+        m_MethodName: PlayerOnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c15792fb-b2e4-4a74-b750-6a420e71ef70
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5f0d6095-9a0c-457e-b5ba-dcc4ca3092c4
+    m_ActionName: Player/Look[/Mouse/delta,/Pen/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c08081df-6622-4007-bedf-0198253825db
+    m_ActionName: Player/Interact[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c7c32529-22c8-4f46-a601-c3f65737d37a
+    m_ActionName: Player/Speak[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0ad077f0-cf30-4279-b74e-4a18f057ea04
+    m_ActionName: Player/Transform[/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ccaace7d-a4e3-4908-a1bb-613f381aace0
+    m_ActionName: Player/ToggleAnimation[/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a3981e48-56bf-49e3-9979-386dee037bfa
+    m_ActionName: Player/ToggleMatchSpeed[/Keyboard/3]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2dc4740d-c9f0-430f-83e5-1b5bc448e360
+    m_ActionName: Player/Run[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d40ed334-bff4-4111-827e-ba245c4c303a
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8d1c24db-bc11-40a7-ac59-bca4725539df
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cf210872-8820-4b2b-b42a-1f75e27a7a27
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d9b47e24-ebb7-4474-a64b-b0c4ac7d6323
+    m_ActionName: UI/Point[/Mouse/position,/Pen/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6aea6cf7-4bc5-4b12-bd0b-47ac0b38e49f
+    m_ActionName: UI/Click[/Mouse/leftButton,/Pen/tip]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bb89c547-d16d-43dc-89bd-62a5ddd1e853
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 63e3ca72-b34d-486c-95f2-6773594f4569
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2dd42bad-d01d-4e90-80a3-bdb098f8bff8
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5441c37a-12b8-421f-ac88-afb159580f39
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d1c3d89a-d4a1-4bf1-924c-88d8df3401d6
+    m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
