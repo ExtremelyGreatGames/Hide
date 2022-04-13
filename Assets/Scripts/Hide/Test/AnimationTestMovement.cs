@@ -108,7 +108,16 @@ namespace Hide.Test
             {
                 // we want to normalize normally
                 _lastY = NormalizeMoveForAnimation(_move.y, isMoving);
-                _lastX = NormalizeMoveForAnimation(_move.x, isMoving);
+                
+                // if we have move y, minimize move x
+                if (Mathf.Abs(_lastY) > 0f)
+                {
+                    _lastX = NormalizeMoveForAnimation(_move.x, false);
+                }
+                else
+                {
+                    _lastX = NormalizeMoveForAnimation(_move.x, isMoving);
+                }
             }
             else
             {
